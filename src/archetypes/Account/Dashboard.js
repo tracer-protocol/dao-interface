@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components'
-import { Panel, Button, StyledMenu, StyledMenuItem } from '@components'
+import { Panel, Button } from '@components'
 import { Row, Col, Typography, Form, Input, Switch as AntSwitch} from 'antd'
 import { useDao, useTracer } from '@libs/tracer'
 import { Account } from '@archetypes'
@@ -20,17 +20,12 @@ const Switch = styled(AntSwitch)
 	background: #0000bd;
 `
 
-const SPanel = styled(Panel)
-`
-	max-width: 400px;
-`
-
 export default styled(
 	({
 		className
 	}) => {
 
-		const { userStaked, totalStaked, __STAKE, __WITHDRAW } = useDao();
+		const { userStaked, __STAKE, __WITHDRAW } = useDao();
 		const { userBalance } = useTracer()
 		const { status } = useAccount();
 		const [toggle, setToggle] = useState(false);
@@ -49,7 +44,7 @@ export default styled(
 			}
 		}
 
-		const checkValidAmount = (rule, value, callback) => {
+		const checkValidAmount = (_rule, value, callback) => {
 			const amount = parseFloat(value);
 			const balance = toggle ? userBalance : parseFloat(Web3.utils.fromWei(userStaked));
 			const message = !toggle ? 'You have not staked enough to withdraw this amount' : 'You dont have enough TCR to stake this amount'
@@ -80,10 +75,7 @@ export default styled(
 			</div>
 			<Row gutter="24" justify="center" >
 				<Col span="8">
-					<SPanel>
-						<Typography.Text level={5}>
-							<strong>Total Staked:</strong> {Web3.utils.fromWei(totalStaked)} TCR
-						</Typography.Text>
+					<Panel className="sPanel">
 						<Row className="buttons">
 							<Col span="24" align="right">
 								<Form
@@ -150,7 +142,7 @@ export default styled(
 								</Form>
 							</Col>
 						</Row>
-					</SPanel>
+					</Panel>
 				</Col>
 			</Row>
 		</div>
@@ -164,6 +156,10 @@ export default styled(
 
 		h4{
 			margin-top: 0!important;
+		}
+
+		.sPanel {
+			max-width: 400px;
 		}
 
 		.buttons {

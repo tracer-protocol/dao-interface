@@ -213,7 +213,7 @@ export default styled(
 			>
 			<DataLoader
 				loading={loading}
-				noresults={topHolders?.length < 0}
+				noresults={topHolders?.length <= 0}
 				>
                 <ChartContainer>
                 <InfoBox addressInfo={addressInfo} open={open} setOpen={setOpen}/>
@@ -234,7 +234,7 @@ export default styled(
                             isAnimationActive={false}
                         >
                             {
-                                data.map((entry, index) => 
+                                data.map((_entry, index) => 
                                     <Cell 
                                         fill={COLORS[index % COLORS.length]}
                                         opacity={activeIndex !== null && activeIndex !== index ? 0.5 : 1}
