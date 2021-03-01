@@ -1,0 +1,26 @@
+{
+    "0x08ee780ed27e5c50650128abec3d76654c98e0d9": {
+        "name": "Treasury",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "link": {
+            "name": "The Treasury",
+            "href": "https://www.google.com"
+        }
+    },
+    "0x264ba0fde1a83b0df043e6b4b7b92c67d331d2fa": {
+        "name": "Lion's Mane Development",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "link": {
+            "name": "lionsmane.eth.link",
+            "href": "https://www.lionsmane.dev"
+        }
+    },
+    "unknown": {
+        "name": "Loyal Governers",
+        "description": "All other TCR DAO members. Each and every one of you is highly valued. Thankyou for maintaining such a great project.",
+        "link": {
+            "name": "",
+            "href":""
+        }
+    }
+}

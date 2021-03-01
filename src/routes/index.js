@@ -1,0 +1,5 @@
+export { default as Proposals } from './Proposals'
+export { default as Proposal } from './Proposal'
+export { default as ProposalNew } from './ProposalNew'
+export { default as Allocation } from './Allocation'
+export { default as Dashboard } from './Dashboard'
