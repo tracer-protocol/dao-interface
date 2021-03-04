@@ -221,9 +221,4 @@ export default styled(
 			font-size: 1.8rem;
 			line-height: 1.25em;
 		}
-
-		.squish {
-		}
-
-		
 	`

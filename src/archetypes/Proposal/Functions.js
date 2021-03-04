@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import { Form, Input, Select } from 'antd';
 
 import { proposalFunctions } from './config'
+import { useNetwork } from '../../libs/web3';
 
 export default styled(
 	({
 		className, formRef
 	}) => {
-
+		const { contractAddresses } = useNetwork()
 		const [fName, setFunction] = useState("setVestingSchedule");
 
 		const handleChange = (fName) => {
@@ -43,21 +44,46 @@ export default styled(
 					</Form.Item>
 				)
 				case 'address': return (
+					
 						<Form.Item
 							label={label}
 							name={key}
 							key={key}
 							rules={[
 								...defaultRules,
-								{
-									pattern: new RegExp("^0x[a-fA-F0-9]{40}$"),
-									message: "Please enter a valid ethereum address"
-								},
 							]}
 						>
 							<Input type="text"/>
 						</Form.Item>
 					)
+				case 'currency': return (
+						<Form.Item
+							label={label}
+							name={key}
+							key={key}
+							rules={[
+								...defaultRules,
+							]}
+							>
+								<Select 
+									onChange={(value) => 
+										formRef.current.setFieldsValue({
+											currency: value,
+										})
+									}
+									defaultValue={contractAddresses[input.default]}
+								>
+									{(input.options).map((currency) => 
+										<Select.Option 
+											value={contractAddresses[currency.key]} 
+											key={contractAddresses[currency.key]}
+										>
+											{currency.ticker}
+										</Select.Option>
+									)}
+								</Select>
+						</Form.Item>
+				)
 				default: return (
 					<Form.Item
 							label={label}

@@ -36,14 +36,14 @@ const Provider =
 
 		const getTotalSupply = async () => {
 			const _totalSupply = await contract.methods.totalSupply().call()
-			console.log(_totalSupply)
+			console.debug(_totalSupply, "Total token supply")
 			setTotalSupply(_totalSupply)
 		}
 
 		// NOTE TO DEV: USE THIS TO ALLOW A DAO CONTRACT TO SPEND TRACER TOKENS
 		const __APPROVE = async () => {
 			if(!address || !contractAddresses?.tracerToken || !contractAddresses?.tracerDao) {
-				console.log('Address or Contract not defined')
+				console.debug('Address or Contract not defined')
 			}else{
 				try {
 					const TracerTokenContract = new web3.eth.Contract(TRACER_TOKEN_ABI, contractAddresses?.tracerToken)
@@ -55,7 +55,6 @@ const Provider =
 					const approvalAmount = await TracerTokenContract.methods.totalSupply().call()
 					await TracerTokenContract.methods.approve(contractAddresses?.tracerDao, approvalAmount).send({from: address})
 				} catch(e) {
-					console.log(e.message)
 				}
 			}
 		}

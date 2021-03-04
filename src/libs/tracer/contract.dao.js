@@ -5,10 +5,13 @@ import { useTracer } from '@libs/tracer'
 import { TRACER_DAO_ABI } from './_config'
 import { useFileStorage, useProposals } from './'
 import { proposalFunctions } from '@archetypes/Proposal/config';
+import Web3 from 'web3'
 
 const Context = createContext({});
 
-const useContract = () => useContext(Context)
+const useContract = () => useContext(Context);
+
+
 
 const Provider = 
 	({
@@ -53,7 +56,7 @@ const Provider =
 		const __STAKE = async (amount) => {
 			await __APPROVE()
 			if(!address || !contract) {
-				console.log('Address or Contract not defined')
+				console.debug('Address or Contract not defined')
 			}else{
 				const tx = createTransaction(contract, 'stake')
 				tx.params = [amount]
@@ -70,7 +73,7 @@ const Provider =
 
 		const __WITHDRAW = async (amount) => {
 			if(!address || !contract) {
-				console.log('Address or Contract not defined')
+				console.debug('Address or Contract not defined')
 			} else {
 				const tx = createTransaction(contract, 'withdraw')
 				tx.params = [amount]
@@ -96,12 +99,17 @@ const Provider =
 			tx.send({ from: address })
 		}
 
-		let propose = async proposalFields => {
-			if(!address || !contract) return
-			
+		const buildProposal = (proposalFields) => {
 			const inputValues = [], inputs = [];
+
+			console.debug(proposalFields, "Proposal Fields")
+			// generate inputs for encoded function call
+			// this is generic, will fetch all inputs based on the inputed form
+			// will ignore any inputs that have the type of target as these dont belong in the function call
+			// this is generic for all proposal functions
 			for (let input of proposalFunctions[proposalFields.function_call].inputs) {
 				let val = proposalFields[input.key];
+				if (input.target) continue; // ignore the inputs which are related to target selection
 				inputValues.push(input.toWei ? web3.utils.toWei(val) : val)
 				inputs.push({
 					type: input.type,
@@ -109,8 +117,7 @@ const Provider =
 				}) 
 			}
 
-			// Proper way to do it
-			const vestingProposalData = web3.eth.abi.encodeFunctionCall(
+			const functionData = web3.eth.abi.encodeFunctionCall(
 				{
 					name: `${proposalFields.function_call}`,
 					type: "function",
@@ -118,42 +125,45 @@ const Provider =
 				}, inputValues
 			)
 
-			const { vestingContract } = contractAddresses;
-
-			const transferPropsalData = web3.eth.abi.encodeFunctionCall(
-				{
-					name: 'transfer',
-					type: 'function',
-					inputs: [
-						{
-							type: 'address',
-							name: 'recipient',
-						},
-						{
-							type: 'uint256',
-							name: 'amount',
-						},
-					],
-				}, [vestingContract, web3.utils.toWei(proposalFields.amount)]
-			)
-
-
-			// const proposalData = web3.eth.abi.encodeFunctionCall(
-			// 	{
-			// 		name: `${proposalFields.function_call}`,
-			// 		type: "function",
-			// 		inputs: [
-			// 			{
-			// 			    type: "address",
-			// 			    name: "receiver",
-			// 			},
-			// 		],
-			// 	}, [address]
-			// )
-
 			// This automatically adds a transfer to the vesting contract of the required amount
+			const { vestingContract, tracerToken } = contractAddresses;
+
+			// this is where we add extra function calls, 
+			// for example the vesting schedule automaticall adds a transfer call
+			// to ensure the vesting contract has the required funds to set create the vesting schedule
+			switch (proposalFields.function_call) {
+				case 'setVestingSchedule':
+					const transferData = web3.eth.abi.encodeFunctionCall(
+						{
+							name: 'transfer',
+							type: 'function',
+							inputs: [
+								{
+									type: 'address',
+									name: 'recipient',
+								},
+								{
+									type: 'uint256',
+									name: 'amount',
+								},
+							],
+						}, [vestingContract, web3.utils.toWei(proposalFields.amount)]
+					)
+					return [[proposalFields.account, tracerToken], [functionData, transferData]]
+				case 'transfer': 
+					return [[proposalFields.currency], [functionData]];
+				default:
+					return [[],[]] //error
+			}
+		}
+
+		let propose = async proposalFields => {
+			if(!address || !contract) return
+
+			const params = buildProposal(proposalFields)
+
 			const tx = createTransaction(contract, 'propose')
-			tx.params = [[proposalFields.account, vestingContract], [vestingProposalData, transferPropsalData]]
+			tx.params = params;
 			tx.attemptMessage = 'Creating proposal'
 			tx.successMessage = 'Proposal successfully created'
 			tx.failureMessage = 'Proposal creation failed'

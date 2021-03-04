@@ -2,6 +2,10 @@ import { useEffect, useState, createContext, useContext, useReducer } from 'reac
 import ipfsCore from 'ipfs-core'
 import { useNetwork, useAccount } from '@libs/web3'
 
+// TODO - add a network ID so you can properly create proposals on testnet
+// dao-map will block any proposal creation on testnet since it validates the proposal
+// based on the contract address
+
 const Context = createContext({});
 
 const useFileStorage = () => useContext(Context)
@@ -79,11 +83,6 @@ const Provider =
 				"sig": sig
 			}
 
-			// console.info('-------------')
-			// console.log(proposalId)
-			// console.log(path)
-			// console.log(signature)
-
  			fetch(`${url}/proposals`, 
  				{
 	 				method: 'POST',
@@ -94,7 +93,7 @@ const Provider =
 	 			})
 	 			.then(response => response.json())
 	 			.then(data => {
-					console.log('Success:', data);
+					console.debug('Success:', data);
 					resolve(path)
 	 			})
  		})
