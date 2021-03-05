@@ -1,5 +1,5 @@
 import { useEffect, useState, createContext, useContext } from 'react'
-import { useNetwork, useAccount } from '@libs/web3'
+import { useNetwork, useAccount, useTransactions } from '@libs/web3'
 import { TRACER_TOKEN_ABI } from './_config'
 
 const Context = createContext({});
@@ -13,6 +13,7 @@ const Provider =
 
 		let { contractAddresses, web3 } = useNetwork()
 		let { address } = useAccount()
+		const { createTransaction } = useTransactions()
 		let [contract, setContract] = useState()
 		const [userBalance, setUserBalance] = useState()
 		const [totalSupply, setTotalSupply] = useState()
@@ -53,7 +54,12 @@ const Provider =
 						return
 					}
 					const approvalAmount = await TracerTokenContract.methods.totalSupply().call()
-					await TracerTokenContract.methods.approve(contractAddresses?.tracerDao, approvalAmount).send({from: address})
+					const tx = createTransaction(TracerTokenContract, 'approve')
+					tx.params = [contractAddresses?.tracerDao, approvalAmount]
+					tx.attemptMessage = 'Approving TCR'
+					tx.successMessage = 'Approve successful'
+					tx.failureMessage = 'Failed to aprrove spending of TCR'
+					await tx.send({from: address})
 				} catch(e) {
 				}
 			}

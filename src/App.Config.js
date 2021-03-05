@@ -27,7 +27,7 @@ export const networkConfig = {
     preview_url: 'https://etherscan.io',
     contractAddresses: {
       tracerDao: '0x838a40eFf0C6A095318D561c6eAFF191D8F8be42',
-      tracerToken: '0xCb3954356Bc42bB3f61F15f3D478276096664316',
+      tracerToken: '0x2203721B16d2cDb4b64a478b220713AC036D0B63',
       vestingContract: '0x26E552c66234542497A8E9a530d83a53f174DA19',
       dai: '0x73967c6a0904aa032c103b4104747e88c566b1a2',
     },

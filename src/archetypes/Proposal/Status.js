@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
-import { Statistic, Typography, Button, Row } from 'antd';
+import { Statistic, Typography, Button as AButton, Row, Form, Modal, Input } from 'antd';
 import moment from 'moment'
 import { upperFirst } from 'lodash'
-import { Tag, Button as StakeButton } from '@components'
+import { Tag, Button as StakeButton, Max, Button } from '@components'
 import { numberToMaxDb, fromWei } from '@util/helpers'
 import { useProposal, useProposals, useDao, useTracer } from '@libs/tracer'
+import { Link } from 'react-router-dom';
 import { useAccount } from '@libs/web3';
+import Web3 from 'web3';
 import { statusOptions } from './config'
+import { Account } from '@archetypes'
 
 const Info = styled(
 	({
@@ -101,6 +104,30 @@ const State = styled(
 		color: black !important;
 	`
 
+const VoteForm = styled(Form)
+`
+	padding-top: 3rem;
+	padding-right: 3rem;
+	padding-left: 3rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	.amount {
+		margin-bottom: 4rem;
+	}
+
+	.submit {
+		margin-bottom: 0;
+	}
+`
+
+const VoteModal = styled(Modal)
+`
+	border-radius: 10px;
+`
+
+
 const WidgetBar = styled(
 	({
 		id,
@@ -117,11 +144,35 @@ const WidgetBar = styled(
 			votesFor,
 		} = useProposal(id)
 
+		const formRef = React.createRef()
+
 		const { 
-			totalStaked, vote, quorumDivisor
+			totalStaked, vote, quorumDivisor, userStaked
 		} = useDao()
 
-		const [percent, setPercent] = useState(0)
+		const { status } = useAccount();
+
+		const [percent, setPercent] = useState(0);
+		const [showModal, setShowModal] = useState(false);
+
+		const inputMax = (e) => {
+			e.preventDefault();
+			if (userStaked) { // user has no stake 
+				formRef.current.setFieldsValue({ amount: Web3.utils.fromWei(userStaked)})
+			}
+		}
+
+		const checkValidAmount = (_rule, value, callback) => {
+			const amount = parseFloat(value);
+			const balance = parseFloat(Web3.utils.fromWei(userStaked));
+			if(amount <= balance) {
+				return callback()
+			} else if (!amount) {
+				return callback("Amount is required")
+			}
+			return callback("You have not staked enough to vote this amount")
+		};
+
 
 		useEffect(() => {
 			if(!votes?.length || !totalStaked) return
@@ -131,6 +182,59 @@ const WidgetBar = styled(
 		return <div
 			className={`widgetbar ${className}`}
 			>
+
+			<VoteModal visible={showModal} footer={null} onCancel={() => setShowModal(false)} >
+				<VoteForm
+					onFinish={(values) => {
+						// true boolean of yes
+						vote(id, !!yes, Web3.utils.toWei(values.amount)) 
+					}}
+					ref={formRef}
+				>
+					<Form.Item 
+						label="Amount to Vote" 
+						name="amount"
+						className="amount"
+						onChange={(e) => {e.preventDefault(); formRef.current.validateFields(['amount']);}}
+						required={false}
+						rules={[
+							{
+								validator: checkValidAmount
+							}
+						]}
+						>
+						<Input type="number"
+							addonAfter={
+								<Max
+									onClick={inputMax}
+								>
+									Max
+								</Max>
+							}
+
+						/>
+					</Form.Item>
+					
+					<Form.Item className="submit">
+					{
+						status !== 'CONNECTED'
+						?  
+							<Account.Button className="button"/>
+						:
+							<Button 
+								size='large' 
+								type="primary"
+								className="button"
+								htmlType="submit"
+								
+								>
+									Submit Vote
+							</Button>
+					}	
+					</Form.Item>
+
+					</VoteForm>
+			</VoteModal>
 			<Typography.Text className='title'>
 				{!!yes && 'Yes'} {!!no && 'No'} {numberToMaxDb(percent, 1)}% ({yes ? fromWei(votesFor) : fromWei(votesAgainst)})
 			</Typography.Text>
@@ -139,18 +243,18 @@ const WidgetBar = styled(
 				<span className='marker' style={{left: `${100 / quorumDivisor}%`}}/>
 			</span>
 			{buttons && 
-				<Button 
+				<AButton 
 					disabled={['processing', 'complete', 'proposed'].includes(state)}
 					className='button' 
 					size='small' 
 					onClick={() => 
-						yes 
-							? vote(id, true, "1000000000000000000") 
-							: vote(id, false, "1000000000000000000") 
+						{ 
+							if (!['processing', 'complete', 'proposed'].includes(state)) setShowModal(true);
+						}
 					}
 					>
 					Vote {yes ? 'Yes' : 'No'}
-				</Button>
+				</AButton>
 			}
 
 			
@@ -219,21 +323,16 @@ const Panel = styled(
 		className,
 	}) => {
 		const { 
-			__STAKE,
 			totalStaked,
-			quorumDivisor
+			quorumDivisor,
+			userStaked
 		} = useDao()
 
 		const { 
 			userBalance 
 		} = useTracer();
 
-
 		const { status } = useAccount();
-
-		const { threshold } = useProposal(id)
-
-		console.log(totalStaked)
 
 		return <div
 			className={className}
@@ -254,13 +353,17 @@ const Panel = styled(
 				{
 					status === 'CONNECTED' &&
 					parseInt(fromWei(userBalance)) >= 1 &&
-						<StakeButton
-							type="primary"
-							className="stake"
-							onClick={__STAKE}
-							>
-							Stake
-						</StakeButton>
+					parseInt(fromWei(userStaked)) === 0 &&
+						<Link to="/dashboard">
+							<StakeButton
+								type="primary"
+								className="stake"
+								onClick={() => null}
+								>
+								Stake
+							</StakeButton>
+
+						</Link>
 				}
 			</Row>
 

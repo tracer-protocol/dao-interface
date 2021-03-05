@@ -87,7 +87,8 @@ const Provider =
 			await __APPROVE()
 			if(!address || !contract) {
 				console.debug('Address or Contract not defined')
-			}else{
+			}else {
+				console.log(amount, contract)
 				const tx = createTransaction(contract, 'stake')
 				tx.params = [amount]
 				tx.attemptMessage = 'Staking TCR'
@@ -120,7 +121,6 @@ const Provider =
 
 		const vote = (proposalId, userVote, amount) => {
 			if(!address || !contract) return
-
 			const tx = createTransaction(contract, 'vote')
 			tx.params = [proposalId, userVote, amount]
 			tx.attemptMessage = 'Voting'
