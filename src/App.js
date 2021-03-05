@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout } from 'antd';
 import { Header, Loading, Notification } from '@components'
 import { Proposals, Proposal, ProposalNew, Allocation, Dashboard } from '@routes'
@@ -24,7 +24,7 @@ const StyledContent = styled(Layout.Content)`
 
 const Details = () =>  
 	<Layout style={{minHeight: '100vh'}}>
-		<Router>
+		<Router  basename="/">
 			<Header />
 			<Loading/>
 			<StyledContent>

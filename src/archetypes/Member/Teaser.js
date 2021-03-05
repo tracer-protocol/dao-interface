@@ -31,7 +31,7 @@ export default styled(
 				{truncateString(id)}
 			</Typography.Title>
 			<Statistic
-				title="Tokens held" 
+				title="Tokens Staked" 
 				value={numberToMaxDb(fromWei(staked), 5)} 
 			/>
 			<Statistic

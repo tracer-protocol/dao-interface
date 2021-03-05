@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components'
 import { Panel, Button } from '@components'
-import { Row, Col, Typography, Form, Input, Switch as AntSwitch} from 'antd'
+import { Row, Col, Typography, Form, Input, Switch as AntSwitch } from 'antd'
 import { useDao, useTracer } from '@libs/tracer'
 import { Account } from '@archetypes'
 import { useAccount } from '@libs/web3'
@@ -28,7 +28,7 @@ export default styled(
 		const { userStaked, __STAKE, __WITHDRAW } = useDao();
 		const { userBalance } = useTracer()
 		const { status } = useAccount();
-		const [toggle, setToggle] = useState(false);
+		const [toggle, setToggle] = useState(true);
 		const formRef = React.createRef()
 
 		const inputMax = (e) => {

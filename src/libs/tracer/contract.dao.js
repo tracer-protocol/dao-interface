@@ -1,11 +1,10 @@
-import { useEffect, useState, createContext, useContext } from 'react'
+import { useEffect, useState, createContext, useContext, useReducer } from 'react'
 import { get } from 'lodash'
 import { useNetwork, useAccount, useTransactions } from '@libs/web3'
 import { useTracer } from '@libs/tracer'
 import { TRACER_DAO_ABI } from './_config'
 import { useFileStorage, useProposals } from './'
 import { proposalFunctions } from '@archetypes/Proposal/config';
-import Web3 from 'web3'
 
 const Context = createContext({});
 
@@ -26,9 +25,37 @@ const Provider =
 		const { refetch } = useProposals()
 
 		let [contract, setContract] = useState()
-		let [proposalThreshold, setProposalThreshold] = useState()
-		let [userStaked, setUserStaked] = useState('0')
-		let [totalStaked, setTotalStaked] = useState('0')
+
+		const initialState = {
+			totalStaked: 0,
+			userStaked: 0,
+			proposalThreshold: 0,
+			quorumDivisor: 0
+		}
+		const reducer = (state, action) => {
+			switch (action.type) {
+				case 'setTotalStaked':
+					return {
+						...state, totalStaked: action.value
+					};
+				case 'setUserStaked':
+					return {
+						...state, userStaked: action.value
+					};
+				case 'setProposalThreshold':
+					return {
+						...state, proposalThreshold: action.value
+					};
+				case 'setQuorumDivisor':
+					return {
+						...state, quorumDivisor: action.value
+					};
+				default:
+				throw new Error();
+			}
+		}
+
+		const [state, dispatch] = useReducer(reducer, initialState);
 
 		useEffect(() => {
 			if(contractAddresses?.tracerDao && web3){
@@ -40,15 +67,18 @@ const Provider =
 
 		const fetchContractFields = async () => {
 			const threshold = await contract.methods.proposalThreshold().call()
-			setProposalThreshold(threshold)
+			dispatch({ type: 'setProposalThreshold', value: threshold })
+			
+			const quorumDivisor = await contract.methods.quorumDivisor().call()
+			dispatch({ type: 'setQuorumDivisor', value: quorumDivisor})
 
 			const staked = await contract.methods.totalStaked().call()
-			setTotalStaked(staked)
+			dispatch({ type: 'setTotalStaked', value: staked })
 		}
 
 		const fetchUserStaked = async () => {
 			const staked = await contract.methods.getStaked(address).call()
-			setUserStaked(staked)
+			dispatch({ type: 'setUserStaked', value: staked })
 		}
 
 		// NOTE TO DEV: USE THIS TO STAKE IN TRACER DAO
@@ -189,9 +219,7 @@ const Provider =
 			value={{
 				vote,
 				propose,
-				proposalThreshold,
-				userStaked,
-				totalStaked,
+				...state,
 				__STAKE,
 				__WITHDRAW
 				// expose more methods here to interact with the contract

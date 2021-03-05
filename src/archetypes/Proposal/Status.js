@@ -115,11 +115,10 @@ const WidgetBar = styled(
 			votes,
 			votesAgainst,
 			votesFor,
-			threshold,
 		} = useProposal(id)
 
 		const { 
-			totalStaked, vote
+			totalStaked, vote, quorumDivisor
 		} = useDao()
 
 		const [percent, setPercent] = useState(0)
@@ -137,7 +136,7 @@ const WidgetBar = styled(
 			</Typography.Text>
 			<span className="chart">
 				<span className='progress' style={{width: `${percent}%`}}/>
-				<span className='marker' style={{left: `${fromWei(threshold)}%`}}/>
+				<span className='marker' style={{left: `${100 / quorumDivisor}%`}}/>
 			</span>
 			{buttons && 
 				<Button 
@@ -220,7 +219,9 @@ const Panel = styled(
 		className,
 	}) => {
 		const { 
-			__STAKE
+			__STAKE,
+			totalStaked,
+			quorumDivisor
 		} = useDao()
 
 		const { 
@@ -232,6 +233,8 @@ const Panel = styled(
 
 		const { threshold } = useProposal(id)
 
+		console.log(totalStaked)
+
 		return <div
 			className={className}
 			>
@@ -242,7 +245,7 @@ const Panel = styled(
 			
 			<div className="title">
 				<Typography.Text>Votes</Typography.Text>
-				<Typography.Text disabled>{fromWei(threshold)}% Required</Typography.Text>
+				<Typography.Text disabled>{100 / quorumDivisor}% (~{totalStaked / quorumDivisor} TCR) Required</Typography.Text>
 			</div>
 			
 			<VotingWidget id={id} buttons/>

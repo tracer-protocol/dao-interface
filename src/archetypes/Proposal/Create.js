@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components'
-import { Form, Input, Row, Col, Typography } from 'antd'
+import { Form, Input, Row, Col, Typography, Modal } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Account } from '@archetypes'
 import { Button, Panel } from '@components'
@@ -22,11 +22,16 @@ export default styled(
 		const { userBalance } = useTracer();
 		const { status } = useAccount();
 		const [editor, setEditor] = useState();
+		const [showModal, setShowModal] = useState(true);
 		const formRef = React.createRef();
 
 		return <div 
 			className={className}
 			>
+				
+			<Modal title="Warning" visible={showModal} onCancel={() => setShowModal(false)} footer={null}>
+				<p>This feature is still in beta. Create proposals at your own risk. There is potential that the generated proposal may result in a reverted transaction.</p>
+			</Modal>
 			<Link className='back' to='/'>
 				<ArrowLeftOutlined/>&nbsp; 
 				Proposals
