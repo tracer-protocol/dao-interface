@@ -60,12 +60,8 @@ export default function App() {
 	return <Web3Provider 
 		networkConfig={networkConfig}
 		>
-		<GraphProvider 
-			graphUri={process.env.REACT_APP_GRAPHQL_ENDPOINT}
-			>
-			<TracerProvider
-				mapEndpoint={process.env.REACT_APP_DAO_MAP_ENDPOINT}
-				>
+		<GraphProvider>
+			<TracerProvider>
 				<StyleFonts/>
 				<StyleVars/>
 				<StyleBase/>

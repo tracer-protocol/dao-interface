@@ -5,8 +5,11 @@ import {
 	useQuery as _useQuery, 
 	gql as _gql 
 } from '@apollo/client';
+import { useNetwork } from '@libs/web3'
 
-export const GraphProvider = ({graphUri, children}) => {
+export const GraphProvider = ({ children }) => {
+	let { graphUri } = useNetwork();
+
 	const client = Client.ApolloWrapper(graphUri); 
 
 	return <ApolloProvider client={client}>

@@ -4,20 +4,27 @@ import Filestorage from './filestorage'
 import DAOContract from './contract.dao'
 import TokenContract from './contract.token'
 import KnownAddresses from './dao.addresses.json';
+import { useNetwork } from '../web3'
 
 // nested providers
-export const TracerProvider = ({mapEndpoint, children}) => 
-	<Filestorage.Provider 
-		url={mapEndpoint}
-		>
-		<Proposal.Provider>
-			<TokenContract.Provider>
-				<DAOContract.Provider>
-					{children}
-				</DAOContract.Provider>
-			</TokenContract.Provider>
-		</Proposal.Provider>
-	</Filestorage.Provider>
+export const TracerProvider = ({mapEndpoint, children}) => {
+
+	const { daoMapUrl } = useNetwork;
+
+	return (
+		<Filestorage.Provider 
+			url={daoMapUrl}
+			>
+			<Proposal.Provider>
+				<TokenContract.Provider>
+					<DAOContract.Provider>
+						{children}
+					</DAOContract.Provider>
+				</TokenContract.Provider>
+			</Proposal.Provider>
+		</Filestorage.Provider>
+	)
+}
 	
 
 // public hooks
