@@ -15,7 +15,6 @@ export default styled(
 	}) => {
 
 		const { proposals } = useProposals({creator: id})
-		
 		return <div 
 			className={`proposal-teaser ${className}`}
 			>

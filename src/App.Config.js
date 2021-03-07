@@ -31,7 +31,7 @@ export const networkConfig = {
       vestingContract: '0x26E552c66234542497A8E9a530d83a53f174DA19',
       dai: '0x73967c6a0904aa032c103b4104747e88c566b1a2',
     },
-    graphUri: 'https://api.thegraph.com/subgraphs/name/mrpowerpoint/initial-dao',
+    graphUri: 'https://api.thegraph.com/subgraphs/name/tracer-protocol/tracer-dao',
     daoMapUrl: 'http://localhost:3002'
   },
 

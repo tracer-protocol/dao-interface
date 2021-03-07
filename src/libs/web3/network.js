@@ -22,7 +22,7 @@ const Provider = ({config={}, children}) => {
 	const fetchNetwork = () => {
 		web3.eth.getChainId().then(chainId => {
 			const networkConfig = config[chainId]
-			console.log(chainId)
+			console.debug(`Swapping networks to ${chainId}`)
 			if(!networks[chainId]){
 				setNetwork({
 					id: null,

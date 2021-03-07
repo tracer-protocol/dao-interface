@@ -20,6 +20,7 @@ const ALL_PROPOSALS = gql`
 			duration
 			timestamp
 			threshold
+			totalStaked
 			coolingOff
 			lockDuration
 			votesAgainst

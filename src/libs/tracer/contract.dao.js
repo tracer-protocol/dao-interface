@@ -88,7 +88,6 @@ const Provider =
 			if(!address || !contract) {
 				console.debug('Address or Contract not defined')
 			}else {
-				console.log(amount, contract)
 				const tx = createTransaction(contract, 'stake')
 				tx.params = [amount]
 				tx.attemptMessage = 'Staking TCR'

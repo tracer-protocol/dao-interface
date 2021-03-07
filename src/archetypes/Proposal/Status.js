@@ -19,7 +19,6 @@ const Info = styled(
 	}) => {
 		const { state, status, timestamps } = useProposal(id)
 		const { refetch } = useProposals()
-
 		switch (state) {
 			case 'proposed':
 				return <Statistic.Countdown
@@ -92,7 +91,8 @@ const State = styled(
 		return <Tag 
  			className={className} 
  			style={{
- 				background: statusOptions[state]?.color
+				color: `${statusOptions['proposed']?.text}!important`,
+ 				background: statusOptions['proposed']?.color
  			}}
  			>
  			{statusOptions[state]?.value}
@@ -101,7 +101,7 @@ const State = styled(
 	`
 		border: none !important;
 		border-radius: 1em;
-		color: black !important;
+		color: #fff;
 	`
 
 const VoteForm = styled(Form)
@@ -142,12 +142,13 @@ const WidgetBar = styled(
 			votes,
 			votesAgainst,
 			votesFor,
+			totalStaked
 		} = useProposal(id)
 
 		const formRef = React.createRef()
 
 		const { 
-			totalStaked, vote, quorumDivisor, userStaked
+			vote, quorumDivisor, userStaked
 		} = useDao()
 
 		const { status } = useAccount();
@@ -344,7 +345,7 @@ const Panel = styled(
 			
 			<div className="title">
 				<Typography.Text>Votes</Typography.Text>
-				<Typography.Text disabled>{100 / quorumDivisor}% (~{totalStaked / quorumDivisor} TCR) Required</Typography.Text>
+				<Typography.Text disabled>{100 / quorumDivisor}% Quorum Required</Typography.Text>
 			</div>
 			
 			<VotingWidget id={id} buttons/>
