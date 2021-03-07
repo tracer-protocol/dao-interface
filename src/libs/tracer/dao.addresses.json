@@ -1,26 +1,34 @@
 {
     "0xa84918f3280d488eb3369cb713ec53ce386b6cba": {
-        "name": "The DAO Treasury",
-        "description": "The TCR DAO.",
+        "name": "The Treasury",
+        "description": "DAO Controlled TCR governance rights that will be distributed in whichever way the governors choose to do so, by proposal to the DAO.",
         "link": {
             "name": "The Treasury",
             "href": "https://etherscan.io/address/0xa84918f3280d488eb3369cb713ec53ce386b6cba"
         }
     },
     "0x90d93f5a390bfdbc401f92e916197ee17470a447": {
-        "name": "Lion's Mane Development",
-        "description": "We are a pride of hackers, crypto-economists and open-source ideologues. We build technology to support freedom of the individual. Our values are centred on this pursuit entirely. We coordinate our own actions such that other network participants and governors can operate as efficiently as possible. We strive for the reduction of transaction costs within systems and the eradication of information asymmetries.",
+        "name": "Lion's Mane Vesting",
+        "description": "These governance tokens will be distributed to Lion’s Mane over a three year period.",
         "link": {
             "name": "lionsmane.eth.link",
             "href": "https://www.lionsmane.dev"
         }
     },
     "0xa6a006c12338cdcdbc882c6ab97e4f9f82340651": {
-        "name": "Gnosis Safe",
-        "description": "Gnosis safe.",
+        "name": "Lion's Mane Development",
+        "description": "A pride of hackers, crypto-economists and open-source ideologues that have pledged their software development services to the Tracer DAO.",
         "link": {
-            "name": "etherscan/0xa6a006c12338cdcdbc882c6ab97e4f9f82340651",
-            "href": "https://etherscan.io/address/0xa6a006c12338cdcdbc882c6ab97e4f9f82340651"
+            "name": "lionsmane.eth.link",
+            "href": "https://www.lionsmane.dev"
+        }
+    },
+    "0x2b79e11984514ece5b2db561f49c0466cc7659ea": {
+        "name": "The 100’s Vesting Contracts”",
+        "description": "The initial 100 claimants that claimed from the DAO contract’s governance tokens which will be vested over a three year period.",
+        "link": {
+            "name": "Initial Claimants Vesting",
+            "href": "https://etherscan.io/address/0x2b79e11984514ece5b2db561f49c0466cc7659ea"
         }
     },
     "unknown": {
