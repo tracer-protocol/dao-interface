@@ -76,7 +76,7 @@ const Mobile = styled.div
 const Details = () =>  
 <>
 	<Mobile>
-		<h1>We are currently optimising the mobile experience. For now please visit the site on a desktop</h1>
+		<h1>We are currently optimising the mobile experience. For now please visit the site on a desktop.</h1>
 	</Mobile>
 	<StyledLayout>
 		<Router basename="/">
