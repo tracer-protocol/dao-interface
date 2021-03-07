@@ -1,6 +1,7 @@
 import { useEffect, useState, createContext, useContext } from 'react'
 import { useNetwork, useAccount, useTransactions } from '@libs/web3'
 import { TRACER_TOKEN_ABI } from './_config'
+import Web3 from 'web3';
 
 const Context = createContext({});
 

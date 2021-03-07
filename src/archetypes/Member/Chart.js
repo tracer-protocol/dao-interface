@@ -146,7 +146,7 @@ export default styled(
             }
         })
 
-        const data = parseData(topHolders, totalSupply)
+        const data = parseData(topHolders, totalSupply || "1000000000000000000000000000")
 
         const COLORS = ['#0000bd', '#4848ED', '#5A7FFF', '#83ADFE', '#B8DDFF', '#C7EBFF'];
 

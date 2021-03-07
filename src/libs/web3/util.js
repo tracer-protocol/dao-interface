@@ -30,7 +30,7 @@ export const useWeb3 = () => {
 		'UNAVAILABLE',
 	]
 
-	const [web3, setWeb3] = useState()
+	const [web3, setWeb3] = useState(new Web3(Web3.givenProvider))
 	const [status, setStatus] = useStatus(statusOptions, statusOptions[0])
 
 	useEffect(() => getProvider(), []) // eslint-disable-line
