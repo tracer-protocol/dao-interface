@@ -24,10 +24,10 @@
         }
     },
     "0x2b79e11984514ece5b2db561f49c0466cc7659ea": {
-        "name": "The 100’s Vesting Contracts”",
+        "name": "The 100’s Vesting Contracts",
         "description": "The initial 100 claimants that claimed from the DAO contract’s governance tokens which will be vested over a three year period.",
         "link": {
-            "name": "Initial Claimants Vesting",
+            "name": "The 100's Vesting Contracts",
             "href": "https://etherscan.io/address/0x2b79e11984514ece5b2db561f49c0466cc7659ea"
         }
     },

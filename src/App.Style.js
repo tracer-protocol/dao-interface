@@ -74,7 +74,6 @@ export const Base = createGlobalStyle`
 	html,body {
 		padding: 0;
 		margin: 0;
-		min-width: 1080px;
 		scroll-behavior: smooth;
 	}
 

@@ -22,9 +22,64 @@ const StyledContent = styled(Layout.Content)`
 	padding: 3.5rem 4rem;
 `
 
+const StyledLayout = styled(Layout)
+`
+	min-height: 100vh;
+	.mobile {
+		display: none;
+		color: black;
+		min-height: 100vh;
+		position: absolute;
+		background: white;
+		left: 0;
+		top: 0;
+		width: 100%;
+		z-index: 1000;
+		max-width: 100vw;
+	}
+
+	@media screen and (max-width: 768px) {
+		.mobile {
+			display: block;
+		}
+		display: none;
+	}
+
+`
+
+const Mobile = styled.div
+`
+	display: none;
+	color: black;
+	min-height: 100vh;
+	position: absolute;
+	background: white;
+	padding: 3rem;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+	max-width: 100vw;
+
+	h1 {
+		margin: auto;
+		color: #0000bd!important;
+		text-align: center;
+		font-weight: 500;
+	}
+
+	@media screen and (max-width: 768px) {
+		display: flex;
+	}
+`
+
 const Details = () =>  
-	<Layout style={{minHeight: '100vh'}}>
-		<Router  basename="/">
+<>
+	<Mobile>
+		<h1>We are currently optimising the mobile experience. For now please visit the site on a desktop</h1>
+	</Mobile>
+	<StyledLayout>
+		<Router basename="/">
 			<Header />
 			<Loading/>
 			<StyledContent>
@@ -50,7 +105,8 @@ const Details = () =>
 				</Switch>
 			</StyledContent>
 		</Router>
-	</Layout>
+	</StyledLayout>
+	</>
 
 
 // FYI: need to use anon function 
