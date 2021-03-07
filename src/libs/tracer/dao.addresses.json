@@ -1,18 +1,26 @@
 {
-    "0x08ee780ed27e5c50650128abec3d76654c98e0d9": {
-        "name": "Treasury",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "0xa84918f3280d488eb3369cb713ec53ce386b6cba": {
+        "name": "The DAO Treasury",
+        "description": "The TCR DAO.",
         "link": {
             "name": "The Treasury",
-            "href": "https://www.google.com"
+            "href": "https://etherscan.io/address/0xa84918f3280d488eb3369cb713ec53ce386b6cba"
         }
     },
-    "0x264ba0fde1a83b0df043e6b4b7b92c67d331d2fa": {
+    "0x90d93f5a390bfdbc401f92e916197ee17470a447": {
         "name": "Lion's Mane Development",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "description": "We are a pride of hackers, crypto-economists and open-source ideologues. We build technology to support freedom of the individual. Our values are centred on this pursuit entirely. We coordinate our own actions such that other network participants and governors can operate as efficiently as possible. We strive for the reduction of transaction costs within systems and the eradication of information asymmetries.",
         "link": {
             "name": "lionsmane.eth.link",
             "href": "https://www.lionsmane.dev"
+        }
+    },
+    "0xa6a006c12338cdcdbc882c6ab97e4f9f82340651": {
+        "name": "Gnosis Safe",
+        "description": "Gnosis safe.",
+        "link": {
+            "name": "etherscan/0xa6a006c12338cdcdbc882c6ab97e4f9f82340651",
+            "href": "https://etherscan.io/address/0xa6a006c12338cdcdbc882c6ab97e4f9f82340651"
         }
     },
     "unknown": {
