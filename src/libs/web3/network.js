@@ -16,9 +16,8 @@ const useNetwork = () => useContext(Context)
 
 const Provider = ({config={}, children}) => {
 
-	const [network, setNetwork] = useState({})
+	const [network, setNetwork] = useState(config[1]) // default to mainnet
 	const {web3, status} = useWeb3()
-
 	const fetchNetwork = () => {
 		web3.eth.getChainId().then(chainId => {
 			const networkConfig = config[chainId]
