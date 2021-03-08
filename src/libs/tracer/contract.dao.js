@@ -78,6 +78,7 @@ const Provider =
 
 		const fetchUserStaked = async () => {
 			const staked = await contract.methods.getStaked(address).call()
+			console.debug(`User ${address.slice()} staked balance of ${contractAddresses?.tracerDao} ${staked}`)
 			dispatch({ type: 'setUserStaked', value: staked })
 		}
 

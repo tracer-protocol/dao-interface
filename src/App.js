@@ -93,7 +93,7 @@ const Details = () =>
 					<Route exact path="/proposal/:id">
 						<Proposal/>
 					</Route>
-					<Route exact path="/allocation/members">
+					<Route exact path="/allocation/stakers">
 						<Allocation.List />
 					</Route>
 					<Route exact path="/allocation/chart">

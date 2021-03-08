@@ -9,14 +9,14 @@
     },
     "0x90d93f5a390bfdbc401f92e916197ee17470a447": {
         "name": "Lion's Mane Vesting",
-        "description": "These governance tokens will be distributed to Lion’s Mane over a three year period.",
+        "description": "These governance tokens will be distributed to Lion’s Mane over a three year period. See the details of this proposal <a target=\"_blank\" rel=\"noreferrer noopener\" href=\"https://github.com/lions-mane/tracer-dao/tree/lionsmane-proposal\">here</a>.",
         "link": {
             "name": "lionsmane.eth.link",
             "href": "https://www.lionsmane.dev"
         }
     },
     "0xa6a006c12338cdcdbc882c6ab97e4f9f82340651": {
-        "name": "Lion's Mane Development",
+        "name": "Lion's Mane",
         "description": "A pride of hackers, crypto-economists and open-source ideologues that have pledged their software development services to the Tracer DAO.",
         "link": {
             "name": "lionsmane.eth.link",
@@ -24,16 +24,16 @@
         }
     },
     "0x2b79e11984514ece5b2db561f49c0466cc7659ea": {
-        "name": "The 100’s Vesting Contracts",
+        "name": "The 100’s Vesting",
         "description": "The initial 100 claimants that claimed from the DAO contract’s governance tokens which will be vested over a three year period.",
         "link": {
-            "name": "The 100's Vesting Contracts",
+            "name": "The 100's Vesting",
             "href": "https://etherscan.io/address/0x2b79e11984514ece5b2db561f49c0466cc7659ea"
         }
     },
     "unknown": {
         "name": "Loyal Governers",
-        "description": "All other TCR DAO members. Each and every one of you is highly valued. Thankyou for maintaining such a great project.",
+        "description": "All other TCR DAO members. Each and every one of you is highly valued. Thanks for maintaining such a great project.",
         "link": {
             "name": "",
             "href":""

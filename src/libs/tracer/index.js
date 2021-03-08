@@ -9,7 +9,7 @@ import { useNetwork } from '../web3'
 // nested providers
 export const TracerProvider = ({mapEndpoint, children}) => {
 
-	const { daoMapUrl } = useNetwork;
+	const { daoMapUrl } = useNetwork();
 
 	return (
 		<Filestorage.Provider 

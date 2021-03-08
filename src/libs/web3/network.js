@@ -16,12 +16,22 @@ const useNetwork = () => useContext(Context)
 
 const Provider = ({config={}, children}) => {
 
-	const [network, setNetwork] = useState(config[1]) // default to mainnet
+	const [network, setNetwork] = useState({
+		id: 1,
+		name: networks[1],
+		status: 'DISABLED',
+		...networks[1]
+	}) // default to mainnet
+	
 	const {web3, status} = useWeb3()
 	const fetchNetwork = () => {
 		web3.eth.getChainId().then(chainId => {
 			const networkConfig = config[chainId]
-			console.debug(`Swapping networks to ${chainId}`)
+
+			console.debug(
+				`Swapping networks to ${chainId}\n` + 
+				`${JSON.stringify(networkConfig)}`
+			)
 			if(!networks[chainId]){
 				setNetwork({
 					id: null,

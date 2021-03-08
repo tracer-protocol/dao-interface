@@ -21,18 +21,15 @@ const Provider =
 
 		// init contract
 		useEffect(() => {
-			if(contractAddresses?.tracerToken && web3){
+			if (contractAddresses?.tracerToken && web3) { 
 				const _contract = new web3.eth.Contract(TRACER_TOKEN_ABI, contractAddresses?.tracerToken)
 				setContract(_contract)
 			}
-		}, [contractAddresses?.tracerToken]) // eslint-disable-line
-
-
-		useEffect(() => !!contract && !!address && fetchBalance(), [contract, address]) // eslint-disable-line
-		useEffect(() => !!contract && getTotalSupply(), [contract]) // eslint-disable-line
+		}, [contractAddresses, web3]) // eslint-disable-line
 
 		const fetchBalance = async () => {
 			const _bal = await contract.methods.balanceOf(address).call()
+			console.debug(`User ${address.slice()} balance of ${contractAddresses?.tracerToken.slice()} ${_bal}`)
 			setUserBalance(_bal)
 		}
 
@@ -40,6 +37,9 @@ const Provider =
 			const _totalSupply = await contract.methods.totalSupply().call()
 			setTotalSupply(_totalSupply)
 		}
+
+		useEffect(() => !!contract && !!address && fetchBalance(), [contract, address]) // eslint-disable-line
+		useEffect(() => !!contract && getTotalSupply(), [contract]) // eslint-disable-line
 
 		// NOTE TO DEV: USE THIS TO ALLOW A DAO CONTRACT TO SPEND TRACER TOKENS
 		const __APPROVE = async () => {

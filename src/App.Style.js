@@ -126,7 +126,7 @@ export const Theme = createGlobalStyle`
 		background: white;
 		font-size: var(--font-size-normal);
 	}
-
+	
 	p{
 		font-size: var(--font-size-normal)
 	}

@@ -74,7 +74,6 @@ export default styled(
 		const { userStaked } = useDao();
 		const { status } = useAccount();
 		const [selected, setSelected] = useState(["1"]);
-
 		return <Layout.Header 
 			className={className}
 			>
@@ -132,7 +131,7 @@ export default styled(
 						<NavLink datatype={selected.includes("4") ? "SELECTED" : ""} to='/allocation/chart'>Chart</NavLink>
 					</SubMenuItem>
 					<SubMenuItem key="5">
-						<NavLink datatype={selected.includes("5") ? "SELECTED" : ""}to='/allocation/members'>Members</NavLink>
+						<NavLink datatype={selected.includes("5") ? "SELECTED" : ""}to='/allocation/stakers'>Stakers</NavLink>
 					</SubMenuItem>
 				</SubMenu>
 			</div>

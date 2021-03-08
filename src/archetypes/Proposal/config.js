@@ -1,24 +1,27 @@
 export const statusOptions = {
 	proposed: {
 		key: 'proposed',
-		value: 'Recently Proposed',
+		value: 'Proposed',
 		color: '#C7EBFF',
-		text: '#000'
+		text: '#0000bd'
 	},
 	open: {
 		key: 'open',
 		value: 'Open',
 		color: '#83ADFE',
+		text: '#0000bd'
 	},
 	pending: {
 		key: 'pending',
 		value: 'Pending',
 		color: '#4848ED',
+		text: '#fff'
 	},
 	complete: {
 		key: 'complete',
 		value: 'Complete',
 		color: '#0000bd',
+		text: '#fff'
 	}
 }
 
