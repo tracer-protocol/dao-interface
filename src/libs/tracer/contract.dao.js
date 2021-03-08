@@ -130,8 +130,6 @@ const Provider =
 
 		const buildProposal = (proposalFields) => {
 			const inputValues = [], inputs = [];
-
-			console.debug(proposalFields, "Proposal Fields")
 			// generate inputs for encoded function call
 			// this is generic, will fetch all inputs based on the inputed form
 			// will ignore any inputs that have the type of target as these dont belong in the function call
@@ -189,8 +187,15 @@ const Provider =
 		let propose = async proposalFields => {
 			if(!address || !contract) return
 
-			const params = buildProposal(proposalFields)
-
+			const params = buildProposal(proposalFields);
+			
+			console.debug(
+				"Generated params \n" + 
+				`${params}\n`
+				`Targets: ${params[0].toString()}\n` + 
+				`ProposalData: ${params[1].toString()}` 
+			);
+			
 			const tx = createTransaction(contract, 'propose')
 			tx.params = params;
 			tx.attemptMessage = 'Creating proposal'

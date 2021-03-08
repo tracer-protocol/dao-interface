@@ -38,7 +38,6 @@ const Provider =
 
 		const getTotalSupply = async () => {
 			const _totalSupply = await contract.methods.totalSupply().call()
-			console.debug(_totalSupply, "Total token supply")
 			setTotalSupply(_totalSupply)
 		}
 

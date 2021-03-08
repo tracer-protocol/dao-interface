@@ -72,6 +72,9 @@ export const proposalFunctions = {
 						ticker: 'DAI',
 						key: 'dai'
 					}, {
+						ticker: 'USDC',
+						key: 'usdc'
+					}, {
 						ticker: 'TCR',
 						key: 'tracerToken'
 					}
