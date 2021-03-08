@@ -26,17 +26,19 @@ const Provider =
 		children
 	}) => {
 
-		let { web3 } = useNetwork()
-		let { address } = useAccount()
+		let { web3 } = useNetwork();
+		let { address } = useAccount();
 
 		const [IPFS, setIPFS] = useState()
 		const [files, dispatch] = useReducer(fileReducer, {});
+		const [loading, setLoading] = useState(true);
  		const init = async () => {
 			try { // avoid re-init crash
 				const ipfs = await ipfsCore.create()
 				setIPFS(ipfs)
 			} catch (error) {
 				console.error(error, "Failed to init IPFS")
+				setLoading(false)
 			}
  		}
 
@@ -49,7 +51,7 @@ const Provider =
  				.then(result => result.json())
  				.then(items => {
  					// itterate items and fetch the IPFS data
- 					items.forEach(async proposal => {
+ 					Promise.all(items.forEach(async proposal => {
 						const stream = await IPFS.cat(proposal.contenthash)
 						let data = ''
 						for await (const chunk of stream) {
@@ -60,10 +62,15 @@ const Provider =
 						} catch(error) {
 							console.error("Failed to parse IPFS data", error)
 						}
- 					})
+ 					})).then((_res) => {
+						setLoading(false)
+					}).catch((error) => {
+						console.error("Failed to parse IPFS data", error)
+					})
  				})
 				.catch((error) => {
 					console.error("Failed to tetch ipfs data", error)
+					setLoading(false)
 				})
  		}
   		
@@ -77,7 +84,7 @@ const Provider =
 
  			const { path } = await IPFS.add(JSON.stringify(proposalFields))
 
-			console.log(path)
+			console.debug("Uploaded content to ipfs", path)
 
  			const sig = await web3.eth.personal.sign(`${proposalId},${path}`, address)
 
@@ -109,7 +116,8 @@ const Provider =
 			value={{
 				files,
 				hydrate,
-				upload
+				upload,
+				loading
 			}}
 			>
 			{children}

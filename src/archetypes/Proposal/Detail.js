@@ -9,13 +9,33 @@ import { proposalFunctions } from '@archetypes/Proposal/config'
 import Proposal from './'
 
 import DOMPurify from 'dompurify';
+import { useFileStorage } from '../../libs/tracer';
 
-const CleanHTML = ({ html }) => {
+const CleanHTML = styled(({ className, html }) => {
 	var clean = DOMPurify.sanitize(html);
-	return <div dangerouslySetInnerHTML={{
+	return <Typography className={className} dangerouslySetInnerHTML={{
 		__html: clean
 	}} />
-}
+})
+`
+	h1, h2, h3 {
+		color: #0000bd;
+	}
+	h2 {
+		font-size: 2rem!important;
+		font-weight: 600!important;
+		padding-top: 2rem!important;
+		padding-bottom: 0!important;
+		margin: 2rem 0important;
+	}
+	h3 {
+		font-size: 1.9rem;
+	}
+	p {
+		margin: 1rem 0!important;
+	}
+
+`
 
 export default styled(
 	({
@@ -23,6 +43,7 @@ export default styled(
 	}) => {
 		let { id } = useParams();
 		const ipfsData =  useProposal(id);
+		const { loading } = useFileStorage();
 		const { title, summary, text, creator } = ipfsData
 
 		return <div 
@@ -52,7 +73,7 @@ export default styled(
 							<Typography.Title 
 								level={2}
 								>
-								<Skeleton lines={3}>
+								<Skeleton active={loading} lines={3}>
 									{summary}
 								</Skeleton>
 							</Typography.Title>
@@ -61,7 +82,7 @@ export default styled(
 						</div>
 						
 						<p>
-							<Skeleton lines={10}>
+							<Skeleton active={loading} lines={10}>
 								<CleanHTML html={text}/>
 							</Skeleton>
 						</p>

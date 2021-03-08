@@ -88,8 +88,6 @@ const State = styled(
 	}) => {
 		const { state } = useProposal(id)
 
-		console.log(state)
-
 		return <Tag 
  			className={className} 
  			style={{
