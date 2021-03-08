@@ -16,12 +16,7 @@ const useNetwork = () => useContext(Context)
 
 const Provider = ({config={}, children}) => {
 
-	const [network, setNetwork] = useState({
-		id: 1,
-		name: networks[1],
-		status: 'DISABLED',
-		...networks[1]
-	}) // default to mainnet
+	const [network, setNetwork] = useState();
 	
 	const {web3, status} = useWeb3()
 	const fetchNetwork = () => {
