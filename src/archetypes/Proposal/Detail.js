@@ -43,7 +43,6 @@ export default styled(
 	}) => {
 		let { id } = useParams();
 		const ipfsData =  useProposal(id);
-		const { loading } = useFileStorage();
 		const { title, summary, text, creator } = ipfsData
 
 		return <div 
@@ -73,7 +72,7 @@ export default styled(
 							<Typography.Title 
 								level={2}
 								>
-								<Skeleton active={loading} lines={3}>
+								<Skeleton active lines={3}>
 									{summary}
 								</Skeleton>
 							</Typography.Title>
@@ -82,7 +81,7 @@ export default styled(
 						</div>
 						
 						<p>
-							<Skeleton active={loading} lines={10}>
+							<Skeleton active lines={10}>
 								<CleanHTML html={text}/>
 							</Skeleton>
 						</p>

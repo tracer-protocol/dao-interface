@@ -31,14 +31,12 @@ const Provider =
 
 		const [IPFS, setIPFS] = useState()
 		const [files, dispatch] = useReducer(fileReducer, {});
-		const [loading, setLoading] = useState(true);
  		const init = async () => {
 			try { // avoid re-init crash
 				const ipfs = await ipfsCore.create()
 				setIPFS(ipfs)
 			} catch (error) {
 				console.error(error, "Failed to init IPFS")
-				setLoading(false)
 			}
  		}
 
@@ -51,7 +49,7 @@ const Provider =
  				.then(result => result.json())
  				.then(items => {
  					// itterate items and fetch the IPFS data
- 					Promise.all(items.forEach(async proposal => {
+ 					items.forEach(async proposal => {
 						const stream = await IPFS.cat(proposal.contenthash)
 						let data = ''
 						for await (const chunk of stream) {
@@ -62,15 +60,10 @@ const Provider =
 						} catch(error) {
 							console.error("Failed to parse IPFS data", error)
 						}
- 					})).then((_res) => {
-						setLoading(false)
-					}).catch((error) => {
-						console.error("Failed to parse IPFS data", error)
-					})
+ 					})
  				})
 				.catch((error) => {
 					console.error("Failed to tetch ipfs data", error)
-					setLoading(false)
 				})
  		}
   		
@@ -117,7 +110,6 @@ const Provider =
 				files,
 				hydrate,
 				upload,
-				loading
 			}}
 			>
 			{children}

@@ -2,7 +2,7 @@ import { useQuery, gql } from '@libs/graph';
 
 const TOP_HOLDERS = gql`
 	query Members {
-		members(first: 5, orderBy: balance, orderDirection: desc) {
+		members(first: 4, orderBy: balance, orderDirection: desc) {
 			id
 			balance
 		}
