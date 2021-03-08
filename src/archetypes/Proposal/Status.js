@@ -88,11 +88,13 @@ const State = styled(
 	}) => {
 		const { state } = useProposal(id)
 
+		console.log(state)
+
 		return <Tag 
  			className={className} 
  			style={{
-				color: `${statusOptions['proposed']?.text}!important`,
- 				background: statusOptions['proposed']?.color
+ 				background: statusOptions[state]?.color,
+ 				color: `${statusOptions[state]?.text}`
  			}}
  			>
  			{statusOptions[state]?.value}
@@ -101,7 +103,7 @@ const State = styled(
 	`
 		border: none !important;
 		border-radius: 1em;
-		color: #fff;
+		// color: #fff;
 	`
 
 const VoteForm = styled(Form)

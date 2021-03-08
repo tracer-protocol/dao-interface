@@ -31,13 +31,12 @@ const Provider =
 
 		const [IPFS, setIPFS] = useState()
 		const [files, dispatch] = useReducer(fileReducer, {});
-
  		const init = async () => {
 			try { // avoid re-init crash
 				const ipfs = await ipfsCore.create()
 				setIPFS(ipfs)
 			} catch (error) {
-				console.error(error)
+				console.error(error, "Failed to init IPFS")
 			}
  		}
 
@@ -63,6 +62,9 @@ const Provider =
 						}
  					})
  				})
+				.catch((error) => {
+					console.error("Failed to tetch ipfs data", error)
+				})
  		}
   		
  		// add items into ipfs
@@ -74,6 +76,8 @@ const Provider =
  			}
 
  			const { path } = await IPFS.add(JSON.stringify(proposalFields))
+
+			console.log(path)
 
  			const sig = await web3.eth.personal.sign(`${proposalId},${path}`, address)
 

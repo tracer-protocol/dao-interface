@@ -94,9 +94,7 @@ const InfoBox = styled(({ className, addressInfo, open, setOpen }) => {
                     {link?.name}
                 </a>
             </p>
-            <p>
-                {description}
-            </p>
+            <p dangerouslySetInnerHTML={{__html: description}} />
         </div>
     );
 })
@@ -112,6 +110,11 @@ const InfoBox = styled(({ className, addressInfo, open, setOpen }) => {
     &[datatype="OPEN"] {
         display: block;
     }
+
+	a:hover {
+		text-decoration: underline;
+	}
+
 
     .close {
         position: absolute;
@@ -160,7 +163,7 @@ export default styled(
                 
             const { name, description, link } = KnownAddresses[address] ? KnownAddresses[address] : {
                 name: address,
-                description: "Unknown address, if this is yours contact us",
+                description: "Unknown address, if this is yours and you wish to label it, please reach out to the Lion's Mane team",
                 link: null
             }
 
