@@ -11,7 +11,7 @@ export const networkConfig = {
       usdc: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
     },
     graphUri: 'https://api.thegraph.com/subgraphs/name/tracer-protocol/tracer-dao',
-    daoMapUrl: 'https://initial-dao-mapping.herokuapp.com/'
+    daoMapUrl: 'https://initial-dao-mapping.herokuapp.com'
   },
   5: {
     preview_url: 'https://goerli.etherscan.io',
