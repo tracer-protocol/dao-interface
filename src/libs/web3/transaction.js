@@ -95,7 +95,7 @@ class Transaction{
 			const returnObj = this.constructReturnObject()
 			this._onSuccess(returnObj)
 		} catch(e) {
-
+			console.error(e)
 			this.message = e.message
 			this.status = this.statusOpts.ERROR
 			

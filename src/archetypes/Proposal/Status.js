@@ -145,6 +145,8 @@ const WidgetBar = styled(
 			totalStaked
 		} = useProposal(id)
 
+		const { refetch } = useProposals()
+
 		const formRef = React.createRef()
 
 		const { 
@@ -188,7 +190,7 @@ const WidgetBar = styled(
 				<VoteForm
 					onFinish={(values) => {
 						// true boolean of yes
-						vote(id, !!yes, Web3.utils.toWei(values.amount)) 
+						vote(id, !!yes, Web3.utils.toWei(values.amount));
 					}}
 					ref={formRef}
 				>

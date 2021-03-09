@@ -10,7 +10,7 @@ export default styled(
 	({
 		className
 	}) => {
-		const { proposals, loading, setFilter } = useProposals({state: 'proposed'})
+		const { proposals, loading, setFilter } = useProposals( { state: 'proposed' })
 		return <div className={className}>
 			
 			<div className="topbar">

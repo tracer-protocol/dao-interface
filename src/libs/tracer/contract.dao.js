@@ -119,14 +119,18 @@ const Provider =
 			}
 		}
 
-		const vote = (proposalId, userVote, amount) => {
+		const vote = async (proposalId, userVote, amount) => {
 			if(!address || !contract) return
 			const tx = createTransaction(contract, 'vote')
 			tx.params = [proposalId, userVote, amount]
 			tx.attemptMessage = 'Voting'
 			tx.successMessage = 'Voting success'
 			tx.failureMessage = 'Voting failed'
-			tx.send({ from: address })
+
+			tx.onSuccess = async ({receipt, notification}) => {
+				refetch();
+			}
+			await tx.send({ from: address })
 		}
 
 		const buildProposal = (proposalFields) => {
@@ -192,7 +196,6 @@ const Provider =
 			
 			console.debug(
 				"Generated params \n" + 
-				`${params}\n`
 				`Targets: ${params[0].toString()}\n` + 
 				`ProposalData: ${params[1].toString()}` 
 			);

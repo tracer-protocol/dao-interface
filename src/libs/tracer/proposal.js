@@ -144,7 +144,7 @@ const Provider =
 	({
 		children
 	}) => {
-
+		const [trigger, setTrigger] = useState(false);
 		const [proposals, setProposals] = useState([])
 		const { files, hydrate } = useFileStorage()
 		const { vote } = useDao()
@@ -156,6 +156,11 @@ const Provider =
 			refetch
 		} = useQuery(ALL_PROPOSALS)
 
+		const _refetch = () => {
+			refetch();
+			setTrigger(!trigger);
+		}
+		
  		// need to merge proposal data and file data whenever they change
  		useEffect(() => {
  			const _proposals = (data?.proposals||[]).map(proposal => {
@@ -181,7 +186,7 @@ const Provider =
 				error,
 				refetch: () => {
 					hydrate()
-					refetch()
+					_refetch()
 				}
 			}}
 			>
