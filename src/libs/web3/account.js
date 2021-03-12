@@ -98,7 +98,7 @@ const Provider = ({children}) => {
 	// once we have web3, watch for events
 	useEffect(() => {
 		if(web3?.version){
-			web3.givenProvider.on('accountsChanged', connect)
+			web3.givenProvider?.on('accountsChanged', connect)
 		}
 	}, [web3?.version, status]) // eslint-disable-line
 

@@ -7,7 +7,8 @@ const networks = {
 	4: 'Rinkeby',
 	5: 'Goerli',
 	42: 'Kovan',
-	1337: 'Local'
+	1337: 'Local',
+	"none": "No Provider"
 }
 
 const Context = createContext({});
@@ -18,7 +19,7 @@ const Provider = ({config={}, children}) => {
 
 	const [network, setNetwork] = useState();
 	
-	const {web3, status} = useWeb3()
+	const {web3, status} = useWeb3();
 	const fetchNetwork = () => {
 		web3.eth.getChainId().then(chainId => {
 			const networkConfig = config[chainId]
@@ -27,6 +28,7 @@ const Provider = ({config={}, children}) => {
 				`Swapping networks to ${chainId}\n` + 
 				`${JSON.stringify(networkConfig)}`
 			)
+
 			if(!networks[chainId]){
 				setNetwork({
 					id: null,
@@ -52,10 +54,23 @@ const Provider = ({config={}, children}) => {
 		})
 	}
 
+
+	useEffect(() => {
+		if (!web3) {
+			setNetwork({
+				id: "none",
+				name: networks["none"],
+				status: 'DISABLED',
+				...config["none"]
+			})
+		}
+
+	}, [web3])
+
 	useEffect(() => {
 		if(Object.keys(config).length && web3 && status === 'AVAILABLE'){
 			fetchNetwork()
-			web3.givenProvider.on('chainChanged', fetchNetwork)
+			web3.givenProvider?.on('chainChanged', fetchNetwork)
 		}
 	}, [config, web3, status]) // eslint-disable-line
 
