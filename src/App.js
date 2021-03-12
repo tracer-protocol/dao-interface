@@ -24,7 +24,7 @@ const StyledContent = styled(Layout.Content)`
 
 const StyledLayout = styled(Layout)
 `
-	min-height: 100vh;
+	height: 100vh;
 	.mobile {
 		display: none;
 		color: black;

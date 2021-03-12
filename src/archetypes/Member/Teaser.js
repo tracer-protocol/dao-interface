@@ -34,7 +34,7 @@ export default styled(
 				value={numberToMaxDb(fromWei(staked), 5)} 
 			/>
 			<Statistic
-				title="Proposals raised" 
+				title="Proposals Raised" 
 				value={proposals.length} 
 			/>
 			<Statistic

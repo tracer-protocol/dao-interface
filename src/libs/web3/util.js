@@ -38,12 +38,14 @@ export const useWeb3 = () => {
 	const getProvider = async () => {
 		// check provider
 		const provider = Web3.givenProvider
-		provider.autoRefreshOnNetworkChange = false
+		
 		if(!provider){
 			setStatus('UNAVAILABLE')
 			setWeb3(null)
 			return
 		}
+		
+		provider.autoRefreshOnNetworkChange = false
 
 		const web3 = new Web3(provider);
 		if(!web3){

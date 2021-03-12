@@ -37,5 +37,16 @@ export const networkConfig = {
     graphUri: 'https://api.thegraph.com/subgraphs/name/tracer-protocol/tracer-dao',
     daoMapUrl: 'http://localhost:3002'
   },
-
+  "none": {
+    preview_url: 'https://etherscan.io',
+    contractAddresses: {
+      tracerDao: '0xA84918F3280d488EB3369Cb713Ec53cE386b6cBa',
+      tracerToken: '0x9C4A4204B79dd291D6b6571C5BE8BbcD0622F050',
+      vestingContract: '0x2B79E11984514Ece5B2Db561F49c0466cC7659EA',
+      dai: '0x73967c6a0904aa032c103b4104747e88c566b1a2',
+      usdc: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+    },
+    graphUri: 'https://api.thegraph.com/subgraphs/name/tracer-protocol/tracer-dao',
+    daoMapUrl: 'https://initial-dao-mapping.herokuapp.com'
+  }
 }
