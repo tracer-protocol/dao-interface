@@ -37,7 +37,7 @@ const Info = styled(
 			case 'processing':
 				return <Statistic
 					className={`proposal-status-info ${className} status-${status}`}
-					title={`${upperFirst(status === 'proposed' ? 'processing' : status)}`}
+					title={`${upperFirst(status === 'proposed' ? 'pending' : status)}`}
 					value={moment.unix(timestamps?.closed).format('DD-MM-YYYY')}
 					data-status={status}
 				/>
@@ -247,12 +247,12 @@ const WidgetBar = styled(
 			</span>
 			{buttons && 
 				<AButton 
-					disabled={['processing', 'complete', 'proposed'].includes(state)}
+					disabled={['pending', 'complete', 'proposed'].includes(state)}
 					className='button' 
 					size='small' 
 					onClick={() => 
 						{ 
-							if (!['processing', 'complete', 'proposed'].includes(state)) setShowModal(true);
+							if (!['pending', 'complete', 'proposed'].includes(state)) setShowModal(true);
 						}
 					}
 					>

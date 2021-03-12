@@ -32,7 +32,7 @@ const proposalStates = {
 	UNDEFINED: 'undefined',
 	PROPOSED: 'proposed',
 	OPEN: 'open',
-	PROCESSING: 'processing',
+	PENDING: 'pending',
 	COMPLETE: 'complete',
 }
 
@@ -95,7 +95,7 @@ const useProposal = id => {
 // warmup | time before voting can start in seconds | eg: 7200
 // duration | proposal duration in seconds | eg: 10800
 // coolingOff | cooling off period in seconds | eg: 7200
-const calculateProposalState = ({timestamp, warmup, duration, coolingOff}) => {
+const calculateProposalState = ({timestamp, warmup, duration, coolingOff, status}) => {
 	if(!timestamp || !warmup || !duration || !coolingOff) return proposalStates.UNDEFINED
 
 	let state = proposalStates.UNDEFINED
@@ -106,10 +106,11 @@ const calculateProposalState = ({timestamp, warmup, duration, coolingOff}) => {
 	const completeTime = moment(closeTime).add(coolingOff, 'seconds')
 
 	if(now.isBefore(openTime)) state = proposalStates.PROPOSED
-	else if(now.isBefore(closeTime)) state = proposalStates.OPEN
-	else if(now.isBefore(completeTime)) state = proposalStates.PROCESSING
+	else if(now.isBefore(closeTime) && status !== "passed") state = proposalStates.OPEN
+	else if(now.isBefore(completeTime)) state = proposalStates.PENDING
 	else state = proposalStates.COMPLETE
 
+	console.log(state)
 	return {
 		state: state,
 		timestamps: {
@@ -165,6 +166,7 @@ const Provider =
  		useEffect(() => {
  			const _proposals = (data?.proposals||[]).map(proposal => {
  				// either open or expired, requires timestamp check
+				 console.log(proposal)
  				const state = calculateProposalState(proposal)
 
 				const ipfsValues = files[proposal?.id]||{}
