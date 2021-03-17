@@ -61,6 +61,7 @@ const Provider =
 							console.error("Failed to parse IPFS data", error)
 						}
  					})
+					 
  				})
 				.catch((error) => {
 					console.error("Failed to fetch ipfs data", error)

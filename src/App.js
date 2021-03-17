@@ -24,13 +24,13 @@ const StyledContent = styled(Layout.Content)`
 
 const StyledLayout = styled(Layout)
 `
-	height: 100vh;
+	min-height: 100vh;
 	.mobile {
 		display: none;
 		color: black;
 		min-height: 100vh;
 		position: absolute;
-		background: white;
+		background: #F0F2F5;
 		left: 0;
 		top: 0;
 		width: 100%;

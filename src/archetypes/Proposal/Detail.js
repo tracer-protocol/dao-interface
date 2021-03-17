@@ -34,6 +34,24 @@ const CleanHTML = styled(({ className, html }) => {
 	p {
 		margin: 1rem 0!important;
 	}
+	
+	table thead tr {
+		border-bottom: 1px solid #DFDFFE
+	}
+	tr {
+		border-bottom: 1px solid #DFDFFE
+	}
+	table {
+		margin-top: 5vh;
+	}
+	td, th{
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	table thead tr th {
+		font-weight: 600;
+		color: #0000bd;
+	}
 
 `
 
@@ -143,7 +161,7 @@ export default styled(
 		}
 
 		p{
-			font-size: 1.8rem;
+			font-size: 1.6rem;
 			line-height: 1.25em;
 		}
 
