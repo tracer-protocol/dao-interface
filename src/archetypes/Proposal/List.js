@@ -12,18 +12,18 @@ export default styled(
 	}) => {
 		const { proposals, loading, setFilter } = useProposals( { state: 'proposed' })
 		return <div className={className}>
-			
+
 			<div className="topbar">
 
-				<Filter 
+				<Filter
 					options={Object.values(statusOptions)}
-					defaultSelected={['proposed']}
+					defaultSelected={['open']}
 					onChange={type => setFilter('state', type[0])}
 				/>
 
 				<Link to='/proposal/new'>
-					<Button 
-						size='large' 
+					<Button
+						size='large'
 						type="primary"
 						>
 						New Proposal
@@ -32,15 +32,13 @@ export default styled(
 				</Link>
 			</div>
 
-			
-
 			<DataLoader
 				loading={loading}
 				noresults={proposals.length <= 0}
 			>
 				{proposals.map(({id}) => <Teaser key={id} id={id}/>)}
 			</DataLoader>
-		
+
 		</div>
 	})
 	`	
@@ -54,6 +52,4 @@ export default styled(
 		.proposal-teaser + .proposal-teaser{
 			margin-top: 1em
 		}
-		
-		
 	`

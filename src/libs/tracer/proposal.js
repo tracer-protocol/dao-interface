@@ -2,7 +2,7 @@ import { useEffect, useState, createContext, useContext } from 'react'
 import { find, filter } from 'lodash'
 import moment from 'moment'
 import { useQuery, gql } from '@libs/graph';
-import { useFileStorage, useDao } from './' 
+import { useFileStorage, useDao } from './'
 
 const Context = createContext({});
 
@@ -47,9 +47,9 @@ const useProposals = initialFilters => {
 	const { proposals, loading, error, refetch } = useContext(Context)
 	const [filtered, setFiltered] = useState([])
 
-	const [ 
-		filters, 
-		setFilter 
+	const [
+		filters,
+		setFilter
 	] = useState(initialFilters)
 
 	useEffect(() => {
@@ -80,7 +80,7 @@ const useProposals = initialFilters => {
 const useProposal = id => {
 	const { proposals } = useContext(Context)
 	const [proposal, setProposal] = useState({})
-	
+
 	useEffect(() => {
 		const proposal = find(proposals, {id: id})
 		proposal && setProposal(proposal)
@@ -105,9 +105,7 @@ const calculateProposalState = ({timestamp, warmup, duration, coolingOff, status
 	const closeTime = moment(openTime).add(duration, 'seconds')
 	const completeTime = moment(closeTime).add(coolingOff, 'seconds')
 
-	if(now.isBefore(openTime)) state = proposalStates.PROPOSED
-	else if(now.isBefore(closeTime) && status !== "passed") state = proposalStates.OPEN
-	else if(now.isBefore(completeTime)) state = proposalStates.PENDING
+	if(now.isBefore(openTime)) state = proposalStates.OPEN
 	else state = proposalStates.COMPLETE
 
 	console.log(state)
@@ -141,7 +139,7 @@ const calculateProposalState = ({timestamp, warmup, duration, coolingOff, status
 	// votesAgainst: "0"
 	// votesFor: "0"
 */
-const Provider = 
+const Provider =
 	({
 		children
 	}) => {
@@ -150,9 +148,9 @@ const Provider =
 		const { files, hydrate } = useFileStorage()
 		const { vote } = useDao()
 
-		const { 
-			data, 
-			error, 
+		const {
+			data,
+			error,
 			loading,
 			refetch
 		} = useQuery(ALL_PROPOSALS)
@@ -161,7 +159,7 @@ const Provider =
 			refetch();
 			setTrigger(!trigger);
 		}
-		
+
  		// need to merge proposal data and file data whenever they change
  		useEffect(() => {
  			const _proposals = (data?.proposals||[]).map(proposal => {
@@ -170,7 +168,7 @@ const Provider =
  				const state = calculateProposalState(proposal)
 
 				const ipfsValues = files[proposal?.id]||{}
-				 
+
  				return {
  					...proposal,
  					...state,
@@ -181,7 +179,7 @@ const Provider =
   			setProposals(_proposals)
  		}, [data?.proposals, files, vote])
 
-		return <Context.Provider 
+		return <Context.Provider
 			value={{
 				loading,
 				proposals,
