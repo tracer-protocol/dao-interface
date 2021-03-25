@@ -64,7 +64,7 @@ const Provider =
 					 
  				})
 				.catch((error) => {
-					console.error("Failed to tetch ipfs data", error)
+					console.error("Failed to fetch ipfs data", error)
 				})
  		}
   		

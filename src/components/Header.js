@@ -69,26 +69,26 @@ export default styled(
 	({
 		className
 	}) => {
-		
+
 		const { userBalance } = useTracer();
 		const { userStaked } = useDao();
 		const { status } = useAccount();
 		const [selected, setSelected] = useState(["1"]);
-		return <Layout.Header 
+		return <Layout.Header
 			className={className}
 			>
 			<div className="row">
-				<div 
+				<div
 					className="col left"
 					>
-					<Link 
+					<Link
 						to='/'
 						>
 						<StyledLogo/>
 					</Link>
-					<StyledMenu 
-						theme="dark" 
-						mode="horizontal" 
+					<StyledMenu
+						theme="dark"
+						mode="horizontal"
 						selectedKeys={selected}
 						onSelect={({ key }) => { key === "2" ? setSelected([key, "4"]) : setSelected([key]) }}
 						>
@@ -103,12 +103,12 @@ export default styled(
 						</StyledMenuItem>
 					</StyledMenu>
 				</div>
-				<div 
+				<div
 					className="col right"
 					>
-					
+
 					{
-						status === 'CONNECTED' && 
+						status === 'CONNECTED' &&
 						<span
 							className='balance'
 							>
@@ -122,7 +122,7 @@ export default styled(
 			</div>
 			<div className="row subMenu" datatype={selected[0] === "2" ? "DISPLAY" : "NO_DISPLAY"}>
 				<SubMenu
-					theme="dark" 
+					theme="dark"
 					mode="horizontal"
 					selectedKeys={selected}
 					onSelect={({ key }) => setSelected(["2", key]) }
@@ -179,6 +179,4 @@ export default styled(
 		background: white !important;
 		color: var(--color-primary) !important
 	}
-
-		
 	`

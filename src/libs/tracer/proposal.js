@@ -2,7 +2,7 @@ import { useEffect, useState, createContext, useContext } from 'react'
 import { find, filter } from 'lodash'
 import moment from 'moment'
 import { useQuery, gql } from '@libs/graph';
-import { useFileStorage, useDao } from './' 
+import { useFileStorage, useDao } from './'
 
 const Context = createContext({});
 
@@ -32,7 +32,7 @@ const proposalStates = {
 	UNDEFINED: 'undefined',
 	PROPOSED: 'proposed',
 	OPEN: 'open',
-	PROCESSING: 'processing',
+	PENDING: 'pending',
 	COMPLETE: 'complete',
 }
 
@@ -47,9 +47,9 @@ const useProposals = initialFilters => {
 	const { proposals, loading, error, refetch } = useContext(Context)
 	const [filtered, setFiltered] = useState([])
 
-	const [ 
-		filters, 
-		setFilter 
+	const [
+		filters,
+		setFilter
 	] = useState(initialFilters)
 
 	useEffect(() => {
@@ -80,7 +80,7 @@ const useProposals = initialFilters => {
 const useProposal = id => {
 	const { proposals } = useContext(Context)
 	const [proposal, setProposal] = useState({})
-	
+
 	useEffect(() => {
 		const proposal = find(proposals, {id: id})
 		proposal && setProposal(proposal)
@@ -95,7 +95,7 @@ const useProposal = id => {
 // warmup | time before voting can start in seconds | eg: 7200
 // duration | proposal duration in seconds | eg: 10800
 // coolingOff | cooling off period in seconds | eg: 7200
-const calculateProposalState = ({timestamp, warmup, duration, coolingOff}) => {
+const calculateProposalState = ({timestamp, warmup, duration, coolingOff, status}) => {
 	if(!timestamp || !warmup || !duration || !coolingOff) return proposalStates.UNDEFINED
 
 	let state = proposalStates.UNDEFINED
@@ -105,11 +105,10 @@ const calculateProposalState = ({timestamp, warmup, duration, coolingOff}) => {
 	const closeTime = moment(openTime).add(duration, 'seconds')
 	const completeTime = moment(closeTime).add(coolingOff, 'seconds')
 
-	if(now.isBefore(openTime)) state = proposalStates.PROPOSED
-	else if(now.isBefore(closeTime)) state = proposalStates.OPEN
-	else if(now.isBefore(completeTime)) state = proposalStates.PROCESSING
+	if(now.isBefore(openTime)) state = proposalStates.OPEN
 	else state = proposalStates.COMPLETE
 
+	console.log(state)
 	return {
 		state: state,
 		timestamps: {
@@ -140,30 +139,36 @@ const calculateProposalState = ({timestamp, warmup, duration, coolingOff}) => {
 	// votesAgainst: "0"
 	// votesFor: "0"
 */
-const Provider = 
+const Provider =
 	({
 		children
 	}) => {
-
+		const [trigger, setTrigger] = useState(false);
 		const [proposals, setProposals] = useState([])
 		const { files, hydrate } = useFileStorage()
 		const { vote } = useDao()
 
-		const { 
-			data, 
-			error, 
+		const {
+			data,
+			error,
 			loading,
 			refetch
 		} = useQuery(ALL_PROPOSALS)
+
+		const _refetch = () => {
+			refetch();
+			setTrigger(!trigger);
+		}
 
  		// need to merge proposal data and file data whenever they change
  		useEffect(() => {
  			const _proposals = (data?.proposals||[]).map(proposal => {
  				// either open or expired, requires timestamp check
+				 console.log(proposal)
  				const state = calculateProposalState(proposal)
 
 				const ipfsValues = files[proposal?.id]||{}
-				 
+
  				return {
  					...proposal,
  					...state,
@@ -174,14 +179,14 @@ const Provider =
   			setProposals(_proposals)
  		}, [data?.proposals, files, vote])
 
-		return <Context.Provider 
+		return <Context.Provider
 			value={{
 				loading,
 				proposals,
 				error,
 				refetch: () => {
 					hydrate()
-					refetch()
+					_refetch()
 				}
 			}}
 			>

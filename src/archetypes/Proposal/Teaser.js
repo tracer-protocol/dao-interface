@@ -6,39 +6,39 @@ import { StarFilled } from '@ant-design/icons';
 import { useProposal } from '@libs/tracer'
 import { useAccount } from '@libs/web3'
 import { Skeleton } from '@components'
-import Proposal from './' 
+import Proposal from './'
 import { truncateString } from '@util/helpers'
 
 export default styled(
 	({
-		id, 
+		id,
 		className
 	}) => {
 		const { title, creator } = useProposal(id)
 		const { address } = useAccount()
 
-		return <Link 
+		return <Link
 			className={`proposal-teaser ${className}`}
 			to={`/proposal/${id}`}
 			>
-			<span 
+			<span
 				className="left"
 				>
 				<div className='tag'>
 					<Proposal.Status.State id={id}/>
 				</div>
-				
+
 				<div className='copy'>
-					<Typography.Title 
+					<Typography.Title
 						level={1}
-						ellipsis 
+						ellipsis
 						className='title'
 						>
 						<Skeleton>
 							{title}
 						</Skeleton>
 					</Typography.Title>
-					<Typography.Text 
+					<Typography.Text
 						disabled
 						className='address'
 						>

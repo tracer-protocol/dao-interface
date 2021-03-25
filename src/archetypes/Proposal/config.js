@@ -1,21 +1,9 @@
 export const statusOptions = {
-	proposed: {
-		key: 'proposed',
-		value: 'Proposed',
-		color: '#C7EBFF',
-		text: '#0000bd'
-	},
 	open: {
 		key: 'open',
 		value: 'Open',
 		color: '#83ADFE',
 		text: '#0000bd'
-	},
-	pending: {
-		key: 'pending',
-		value: 'Pending',
-		color: '#4848ED',
-		text: '#fff'
 	},
 	complete: {
 		key: 'complete',
@@ -52,7 +40,7 @@ export const proposalFunctions = {
 				label: 'Duration of vesting period (weeks)',
 				type: 'uint256',
 				name: 'vestingWeeks'
-			} 
+			}
 		]
 	},
 	transfer: {
@@ -69,7 +57,7 @@ export const proposalFunctions = {
 				target: true,
 				label: 'Desired Currency',
 				name: 'currency',
-				default: 'dai', 
+				default: 'dai',
 				options: [ // these options map to defined contract addresses in App.config
 					{
 						ticker: 'DAI',
@@ -88,7 +76,7 @@ export const proposalFunctions = {
 				type: 'uint256',
 				toWei: true,
 				name: "amount",
-			}, 
+			},
 		]
 	}
 }

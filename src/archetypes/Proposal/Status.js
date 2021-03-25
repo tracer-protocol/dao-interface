@@ -37,7 +37,7 @@ const Info = styled(
 			case 'processing':
 				return <Statistic
 					className={`proposal-status-info ${className} status-${status}`}
-					title={`${upperFirst(status === 'proposed' ? 'processing' : status)}`}
+					title={`${upperFirst(status === 'proposed' ? 'pending' : status)}`}
 					value={moment.unix(timestamps?.closed).format('DD-MM-YYYY')}
 					data-status={status}
 				/>
@@ -88,8 +88,8 @@ const State = styled(
 	}) => {
 		const { state } = useProposal(id)
 
-		return <Tag 
- 			className={className} 
+		return <Tag
+ 			className={className}
  			style={{
  				background: statusOptions[state]?.color,
  				color: `${statusOptions[state]?.text}`
@@ -137,7 +137,7 @@ const WidgetBar = styled(
 		className
 	}) => {
 
-		const { 
+		const {
 			state,
 			votes,
 			votesAgainst,
@@ -145,9 +145,11 @@ const WidgetBar = styled(
 			totalStaked
 		} = useProposal(id)
 
+		const { refetch } = useProposals()
+
 		const formRef = React.createRef()
 
-		const { 
+		const {
 			vote, quorumDivisor, userStaked
 		} = useDao()
 
@@ -158,7 +160,7 @@ const WidgetBar = styled(
 
 		const inputMax = (e) => {
 			e.preventDefault();
-			if (userStaked) { // user has no stake 
+			if (userStaked) { // user has no stake
 				formRef.current.setFieldsValue({ amount: Web3.utils.fromWei(userStaked)})
 			}
 		}
@@ -188,12 +190,12 @@ const WidgetBar = styled(
 				<VoteForm
 					onFinish={(values) => {
 						// true boolean of yes
-						vote(id, !!yes, Web3.utils.toWei(values.amount)) 
+						vote(id, !!yes, Web3.utils.toWei(values.amount));
 					}}
 					ref={formRef}
 				>
-					<Form.Item 
-						label="Amount to Vote" 
+					<Form.Item
+						label="Amount to Vote"
 						name="amount"
 						className="amount"
 						onChange={(e) => {e.preventDefault(); formRef.current.validateFields(['amount']);}}
@@ -215,23 +217,23 @@ const WidgetBar = styled(
 
 						/>
 					</Form.Item>
-					
+
 					<Form.Item className="submit">
 					{
 						status !== 'CONNECTED'
-						?  
+						?
 							<Account.Button className="button"/>
 						:
-							<Button 
-								size='large' 
+							<Button
+								size='large'
 								type="primary"
 								className="button"
 								htmlType="submit"
-								
+
 								>
 									Submit Vote
 							</Button>
-					}	
+					}
 					</Form.Item>
 
 					</VoteForm>
@@ -243,14 +245,14 @@ const WidgetBar = styled(
 				<span className='progress' style={{width: `${percent}%`}}/>
 				<span className='marker' style={{left: `${100 / quorumDivisor}%`}}/>
 			</span>
-			{buttons && 
-				<AButton 
-					disabled={['processing', 'complete', 'proposed'].includes(state)}
-					className='button' 
-					size='small' 
-					onClick={() => 
-						{ 
-							if (!['processing', 'complete', 'proposed'].includes(state)) setShowModal(true);
+			{buttons &&
+				<AButton
+					disabled={['pending', 'complete', 'proposed'].includes(state)}
+					className='button'
+					size='small'
+					onClick={() =>
+						{
+							if (!['pending', 'complete', 'proposed'].includes(state)) setShowModal(true);
 						}
 					}
 					>
@@ -258,7 +260,7 @@ const WidgetBar = styled(
 				</AButton>
 			}
 
-			
+
 
 		</div>
 	})
@@ -273,7 +275,7 @@ const WidgetBar = styled(
 		display: block;
 		margin-right: 1em;
 	}
-	
+
 	.chart{
 		display: block;
 		background: rgba(0,0,0,0.1);
@@ -323,14 +325,14 @@ const Panel = styled(
 		id,
 		className,
 	}) => {
-		const { 
+		const {
 			totalStaked,
 			quorumDivisor,
 			userStaked
 		} = useDao()
 
-		const { 
-			userBalance 
+		const {
+			userBalance
 		} = useTracer();
 
 		const { status } = useAccount();
@@ -338,17 +340,10 @@ const Panel = styled(
 		return <div
 			className={className}
 			>
-			<div className='status'>
-				<Info id={id}/>
-				<State id={id}/>
+
+			<div className='title'>
+				<a href='https://vote.tracer.finance/' target='_blank'><Button size='large' type='primary'>Vote On Snapshot</Button></a>
 			</div>
-			
-			<div className="title">
-				<Typography.Text>Votes</Typography.Text>
-				<Typography.Text disabled>{100 / quorumDivisor}% Quorum Required</Typography.Text>
-			</div>
-			
-			<VotingWidget id={id} buttons/>
 
 			<Row  justify="center">
 				{
@@ -379,7 +374,7 @@ const Panel = styled(
 			&:first-child{
 				text-align: left;
 			}
-			
+
 			&:last-child{
 				text-align: right;
 			}
