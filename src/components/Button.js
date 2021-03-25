@@ -4,9 +4,9 @@ import { Button } from 'antd'
 
 export default styled(
 	({
-		children, 
+		children,
 		...props
-	}) => 
+	}) =>
 		<Button {...props}>{children}</Button>
 	)
 	`

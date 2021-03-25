@@ -17,7 +17,7 @@ export default styled(
 			setTags(tags.map(tag => {
 				if(key){
 					if(exclusive === true) tag.checked = tag.key === key
-					else if(tag.key === key) tag.checked = checked 
+					else if(tag.key === key) tag.checked = checked
 				}
 				return tag
 			}))
@@ -34,7 +34,7 @@ export default styled(
 		useEffect(broadcastState, []) // eslint-disable-line
 
 		return <div className={`filter ${className}`}>
-			{tags.map(({key, value, icon, checked}) => 
+			{tags.map(({key, value, icon, checked}) =>
 				<Tag.CheckableTag
 					key={key}
 					checked={checked}
@@ -46,7 +46,6 @@ export default styled(
 		</div>
 	})
 	`
-
 		.ant-badge-status-text{
 			display: none;
 		}
@@ -63,6 +62,4 @@ export default styled(
 				}
 			}
 		}
-		
-
 	`
