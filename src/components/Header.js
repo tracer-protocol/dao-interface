@@ -106,7 +106,7 @@ export default styled(
 				<div
 					className="col right"
 					>
-
+					<Account.AirdropButton/>
 					{
 						status === 'CONNECTED' &&
 						<span
