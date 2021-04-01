@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components'
-import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { useAccount } from '@libs/web3'
+import { useAirdrop } from '@libs/tracer';
 import { Button } from '@components'
-import { truncateString } from '@util/helpers'
 
-const getProof = () => {
-    console.log("Fetching you a proof")
-
-    //make API request to microservice to get proof
-
-    //if proof exists, show a popup to submit proof on chain
-}
 
 export default styled(
 	({
 		className
 	}) => {
-		const { status, connect, disconnect, address } = useAccount()
+		const [ loading, setLoading ] = useState(false);
+		const { status } = useAccount()
+		const { generateProof, withdraw } = useAirdrop();
+
+		const getProof = async (e) => {
+			e.preventDefault();
+			setLoading(true);
+			//if proof exists, then submit proof on chain
+			const proof = generateProof();
+			console.debug(proof);
+			if (!proof.error) {
+				withdraw(proof.proofData, proof.amount)
+			}
+		}
         
 		return status === 'CONNECTED'
 			? 	<Button 

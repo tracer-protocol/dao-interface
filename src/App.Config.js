@@ -28,13 +28,14 @@ export const networkConfig = {
   1337 : {
     preview_url: 'https://etherscan.io',
     contractAddresses: {
-      tracerDao: '0xBfe68185086616592fFeD5B8Ad5eB71946f3Dea8',
-      tracerToken: '0x6C7F56E71CBc8b1FB7489Ae8f0CeEBe6109a146a',
-      vestingContract: '0x26E552c66234542497A8E9a530d83a53f174DA19',
+      tracerDao: '0xd153b3102A7C89515dA929Afd9B60F8C13Dc2437',
+      tracerToken: '0xe60dD3dae14F4F51cFEaef58dF91eB945BE9aeCd',
+      airdropContract: '0x73aB352894863587f3C9462eB7195108479af567',
+      vestingContract: '0x4e02eEe5eC229FDf4E9392B20b71c2Ff5c24Dd05',
       dai: '0x73967c6a0904aa032c103b4104747e88c566b1a2',
       usdc: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
     },
-    graphUri: 'https://api.thegraph.com/subgraphs/name/tracer-protocol/tracer-dao',
+    graphUri: 'http://127.0.0.1:8000/subgraphs/name/dospore/initial-dao',
     daoMapUrl: 'http://localhost:3002'
   },
   "none": {

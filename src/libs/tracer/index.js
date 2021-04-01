@@ -3,6 +3,7 @@ import Members from './members'
 import Filestorage from './filestorage'
 import DAOContract from './contract.dao'
 import TokenContract from './contract.token'
+import Airdrop from './airdrop';
 import KnownAddresses from './dao.addresses.json';
 import { useNetwork } from '../web3'
 
@@ -18,7 +19,9 @@ export const TracerProvider = ({mapEndpoint, children}) => {
 			<Proposal.Provider>
 				<TokenContract.Provider>
 					<DAOContract.Provider>
-						{children}
+						<Airdrop.Provider>
+							{children}
+						</Airdrop.Provider>
 					</DAOContract.Provider>
 				</TokenContract.Provider>
 			</Proposal.Provider>
@@ -36,5 +39,6 @@ export const useTopHolders = Members.useTopHolders
 export const useFileStorage = Filestorage.useFileStorage
 export const useDao = DAOContract.useContract
 export const useTracer = TokenContract.useContract
+export const useAirdrop = Airdrop.useContract;
 
 export { KnownAddresses };

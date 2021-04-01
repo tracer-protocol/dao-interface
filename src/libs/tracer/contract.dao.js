@@ -10,8 +10,6 @@ const Context = createContext({});
 
 const useContract = () => useContext(Context);
 
-
-
 const Provider = 
 	({
 		children
