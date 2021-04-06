@@ -180,7 +180,7 @@ const update = (id, type=Type.DEFAULT, newProps={}) => {
 	})
 }
 
-const add = (type=Type.DEFAULT, props={}) => {
+export const add = (type=Type.DEFAULT, props={}) => {
 	const id = '_' + Math.random().toString(36).substr(2, 10)
 	const formattedProps = formatProps(props)
 	toast(<Notification type={type} {...formattedProps}/>, {

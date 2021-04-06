@@ -108,7 +108,6 @@ const calculateProposalState = ({timestamp, warmup, duration, coolingOff, status
 	if(now.isBefore(openTime)) state = proposalStates.OPEN
 	else state = proposalStates.COMPLETE
 
-	console.log(state)
 	return {
 		state: state,
 		timestamps: {
@@ -164,7 +163,6 @@ const Provider =
  		useEffect(() => {
  			const _proposals = (data?.proposals||[]).map(proposal => {
  				// either open or expired, requires timestamp check
-				 console.log(proposal)
  				const state = calculateProposalState(proposal)
 
 				const ipfsValues = files[proposal?.id]||{}

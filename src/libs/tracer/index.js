@@ -3,7 +3,7 @@ import Members from './members'
 import Filestorage from './filestorage'
 import DAOContract from './contract.dao'
 import TokenContract from './contract.token'
-import Airdrop from './airdrop';
+import Airdrop from './contract.airdrop';
 import KnownAddresses from './dao.addresses.json';
 import { useNetwork } from '../web3'
 

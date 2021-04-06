@@ -5,48 +5,49 @@ import { AIRDROP_ABI } from './_config'
 
 // given a list of leaves, generates the proof data needed
 //data is an array of [account, amount] tuples
-const generateMerkle = (data) => {
-    let tree = [];
+//data is an array of [account, amount] tuples
+const generateMerkle = (data, ethersInstance) => {
+  let tree = [];
 
-    let leaves = data.map((x) =>
-        ethers.utils.solidityKeccak256(["address", "uint256"], [x[0], x[1]])
-    );
+  let leaves = data.map((x) =>
+    ethersInstance.utils.solidityKeccak256(["address", "uint256"], [x[0], x[1]])
+  );
 
-    tree.push(leaves)
+  tree.push(leaves);
 
-    // loop until we have one node left
-    while(leaves.length > 1) {
-        let level = []
-        // for each current leaf, compute parents
-        for (let i = 0; i < leaves.length; i+=2) {
-            let leftChild = leaves[i]
-            let rightChild;
-            //If we have an odd number of nodes, just use this leaf again
-            if (i == leaves.length - 1) {
-                rightChild = leaves[i]
-            } else {
-                rightChild = leaves[i + 1]
-            }
+  // loop until we have one node left
+  while (leaves.length > 1) {
+    let level = [];
+    // for each current leaf, compute parents
+    for (let i = 0; i < leaves.length; i += 2) {
+      let leftChild = leaves[i];
+      let rightChild;
+      //If we have an odd number of nodes, just use this leaf again
+      if (i == leaves.length - 1) {
+        rightChild = leaves[i];
+      } else {
+        rightChild = leaves[i + 1];
+      }
 
-            //compute hash
-            let currHash;
-            if (parseInt(leftChild, 16) > parseInt(rightChild, 16)) {
-                currHash = ethers.utils.solidityKeccak256(
-                    ["bytes32", "bytes32"],
-                    [leftChild, rightChild]
-                );
-            } else {
-                currHash = ethers.utils.solidityKeccak256(
-                    ["bytes32", "bytes32"],
-                    [rightChild, leftChild]
-                );
-            }
-            level.push(currHash);
-        }
-        tree.push(level)
-        leaves = level
+      //compute hash
+      let currHash;
+      if (parseInt(leftChild, 16) > parseInt(rightChild, 16)) {
+        currHash = ethersInstance.utils.solidityKeccak256(
+          ["bytes32", "bytes32"],
+          [leftChild, rightChild]
+        );
+      } else {
+        currHash = ethersInstance.utils.solidityKeccak256(
+          ["bytes32", "bytes32"],
+          [rightChild, leftChild]
+        );
+      }
+      level.push(currHash);
     }
-    return tree
+    tree.push(level);
+    leaves = level;
+  }
+  return tree;
 };
 
 
@@ -60,12 +61,10 @@ const Provider =
 	}) => {
 		let { contractAddresses, web3 } = useNetwork()
 		let { address } = useAccount();
-
         const { createTransaction } = useTransactions()
-
 		let [contract, setContract] = useState();
-
         const [leaves, setLeaves] = useState([]);
+        const [claimed, setClaimed] = useState(false);
 
 		useEffect(() => {
 			if(contractAddresses?.tracerDao && web3){
@@ -77,7 +76,7 @@ const Provider =
         useEffect(() => {
             let unmounted = false;
             const fetchLeaves = async () => {
-                const res = await fetch ('https://ipfs.io/ipfs/QmWhREoBdTw5mXvzNgnVHbL33bYy7sNXBuuvb92UnarsiY')
+                const res = await fetch ('https://ipfs.io/ipfs/QmSNYGH7G4JPYFMU83og7snss16Dq3uwb2D21FgPpVNdbF')
                     .then((res) => res.json())
                     // .then((res) => res.
                     .catch((err) => { console.error(err); return ({ error: err })})
@@ -94,6 +93,18 @@ const Provider =
             return () => { unmounted = true };
         }, [])
 
+
+		const fetchClaimed = async () => {
+            try {
+                const claimed = await contract.methods.claimed(address).call()
+                setClaimed(claimed)
+            } catch (err) {
+                console.error(`Failed to check if user has claimed: ${claimed}`)
+            }
+		}
+
+		useEffect(() => contract  && address && fetchClaimed(), [contract, address]) // eslint-disable-line
+
         const withdraw = async (proof, amount) => {
 			if(!address || !contract) {
 				console.debug('Address or Contract not defined')
@@ -103,7 +114,9 @@ const Provider =
 				tx.attemptMessage = 'Claiming token drop'
 				tx.successMessage = 'Claim successful'
 				tx.failureMessage = 'Failed to claim'
-				await tx.send({from: address})
+				await tx.send({from: address});
+
+                fetchClaimed();
 			}
         }
 
@@ -155,7 +168,8 @@ const Provider =
 			value={{
 				// expose more methods here to interact with the contract
                 generateProof,
-                withdraw
+                withdraw,
+                claimed
 			}}
 			>
 			{children}
