@@ -30,7 +30,7 @@ export const networkConfig = {
     contractAddresses: {
       tracerDao: '0xd153b3102A7C89515dA929Afd9B60F8C13Dc2437',
       tracerToken: '0xe60dD3dae14F4F51cFEaef58dF91eB945BE9aeCd',
-      airdropContract: '0x73aB352894863587f3C9462eB7195108479af567',
+      airdropContract: '0xED598CfEa84d46dC48c2dDca2eB32Cb713DBcB86',
       vestingContract: '0x4e02eEe5eC229FDf4E9392B20b71c2Ff5c24Dd05',
       dai: '0x73967c6a0904aa032c103b4104747e88c566b1a2',
       usdc: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"

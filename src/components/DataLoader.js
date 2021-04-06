@@ -16,7 +16,7 @@ const NoData = styled(
 )`color: var(--color-primary)!important;`
 
 
-const Spinner = styled(
+export const Spinner = styled(
 	({
 		className
 	}) => 
