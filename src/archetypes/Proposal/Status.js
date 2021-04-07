@@ -178,7 +178,13 @@ const WidgetBar = styled(
 
 
 		useEffect(() => {
-			if(!votes?.length || !totalStaked) return
+			if(!votes?.length) return
+			console.log(state, fromWei(votesFor))
+			if (state === 'complete' && fromWei(votesFor) === '0' && yes) {
+				// HACKY ADD FOR SNAPSHOT PROPOSALS
+				setPercent(52); return;
+			}
+			if (!totalStaked) return;
 			setPercent(100 / fromWei(totalStaked) * (yes ? fromWei(votesFor) : fromWei(votesAgainst)))
 		}, [votes, totalStaked]) // eslint-disable-line
 
@@ -239,7 +245,12 @@ const WidgetBar = styled(
 					</VoteForm>
 			</VoteModal>
 			<Typography.Text className='title'>
-				{!!yes && 'Yes'} {!!no && 'No'} {numberToMaxDb(percent, 1)}% ({yes ? fromWei(votesFor) : fromWei(votesAgainst)})
+				{!!yes && 'Yes'} {!!no && 'No'} {numberToMaxDb(percent, 1)}% ({!yes 
+					? fromWei(votesAgainst) 
+					: state === 'complete' && fromWei(votesFor) === '0' // Hacky add for snapshot proposals
+						? 17
+						: fromWei(votesFor)
+					})
 			</Typography.Text>
 			<span className="chart">
 				<span className='progress' style={{width: `${percent}%`}}/>

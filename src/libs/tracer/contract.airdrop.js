@@ -86,7 +86,7 @@ const Provider =
                     return;
                 }
                 if (!unmounted) {
-                    setLeaves(res.accounts)
+                    setLeaves(accounts)
                 }
             }
             fetchLeaves()
