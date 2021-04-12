@@ -5,6 +5,8 @@ import { useAirdrop } from '@libs/tracer';
 import { Button } from '@components'
 import { add } from '@components/Notification';
 import { Spinner } from '@components/DataLoader';
+import ParticipationAgreement from '@components/ParticipationAgreement';
+import { Modal, Checkbox } from 'antd';
 
 const SSpinner = styled(Spinner)
 `
@@ -17,11 +19,23 @@ const SSpinner = styled(Spinner)
 	}
 `
 
+const SCheckbox = styled(Checkbox)
+`
+	margin: 10px 0;
+`
+const Wrap = styled.div
+`
+	margin: auto;
+	width: 25%;
+`
+
 export default styled(
 	({
 		className
 	}) => {
 		const [ loading, setLoading ] = useState(false);
+		const [ showModal, setShowModal ] = useState(false);
+		const [ agree, setAgree ] = useState(false);
 		const { status } = useAccount()
 		const { generateProof, withdraw, claimed } = useAirdrop();
 
@@ -48,10 +62,12 @@ export default styled(
 		}
         
 		return status === 'CONNECTED'
-			? 	<Button 
+			? 	
+				<>
+				<Button 
 					type='primary'
 					className={`account-button -connected ${className}`}
-					onClick={getProof}
+					onClick={(e) => { e.preventDefault(); !claimed && setShowModal(true) }}
 					>
 
 						{loading 
@@ -61,6 +77,30 @@ export default styled(
 								: 'Claim airdrop'
 						}
 				</Button>
+				<Modal title="Participation Agreement" visible={showModal} onCancel={() => { setShowModal(false)}} 
+					footer={[
+						<Wrap>
+						<Button 
+							type='primary'
+							disabled={!agree}
+							className={`-connected ${className}`}
+							onClick={getProof}
+							>
+
+								{loading 
+									? <SSpinner />
+									: claimed 
+										? 'Airdrop claimed'
+										: 'Claim airdrop'
+								}
+						</Button>
+						</Wrap>
+					]}
+				>
+					<ParticipationAgreement />
+					<SCheckbox onChange={(e) => setAgree(e.target.checked)}>YOU HAVE READ, FULLY UNDERSTOOD, AND ACCEPT THIS DISCLAIMER AND ALL THE TERMS CONTAINED IN THE PARTICIPATION AGREEMENT</SCheckbox>
+				</Modal>
+				</>
 			: 	null
 	})
 	`

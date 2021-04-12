@@ -86,7 +86,7 @@ const Provider =
                     return;
                 }
                 if (!unmounted) {
-                    setLeaves(accounts)
+                    setLeaves(res.accounts)
                 }
             }
             fetchLeaves()
@@ -105,21 +105,19 @@ const Provider =
 
 		useEffect(() => contract  && address && fetchClaimed(), [contract, address]) // eslint-disable-line
 
-        const withdraw = async (proof, amount) => {
-			if(!address || !contract) {
-				console.debug('Address or Contract not defined')
-			} else {
-				const tx = createTransaction(contract, 'withdraw')
-				tx.params = [proof, amount]
-				tx.attemptMessage = 'Claiming token drop'
-				tx.successMessage = 'Claim successful'
-				tx.failureMessage = 'Failed to claim'
-				await tx.send({from: address});
-
-                fetchClaimed();
-			}
-        }
-
+      const withdraw = async (proof, amount) => {
+          if(!address || !contract) {
+              console.debug('Address or Contract not defined')
+          } else {
+              const tx = createTransaction(contract, 'withdraw')
+              tx.params = [proof, amount]
+              tx.attemptMessage = 'Claiming token drop'
+              tx.successMessage = 'Claim successful'
+              tx.failureMessage = 'Failed to claim'
+              await tx.send({from: address});
+              fetchClaimed();
+          }
+      }
         const generateProof = () => {
             let matchingLeaf;
             for (var i = 0; i < leaves.length; i++) {
