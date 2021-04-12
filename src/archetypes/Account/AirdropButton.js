@@ -34,7 +34,7 @@ export default styled(
 		className
 	}) => {
 		const [ loading, setLoading ] = useState(false);
-		const [ showModal, setShowModal ] = useState(false);
+		const [ showModal, setShowModal ] = useState(true);
 		const [ agree, setAgree ] = useState(false);
 		const { status } = useAccount()
 		const { generateProof, withdraw, claimed } = useAirdrop();
