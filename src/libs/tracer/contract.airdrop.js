@@ -10,7 +10,7 @@ const generateMerkle = (data, ethersInstance) => {
   let tree = [];
 
   let leaves = data.map((x) =>
-    ethersInstance.utils.solidityKeccak256(["address", "uint256"], [x[0], x[1]])
+    ethers.utils.solidityKeccak256(["address", "uint256"], [x[0], x[1]])
   );
 
   tree.push(leaves);
@@ -32,12 +32,12 @@ const generateMerkle = (data, ethersInstance) => {
       //compute hash
       let currHash;
       if (parseInt(leftChild, 16) > parseInt(rightChild, 16)) {
-        currHash = ethersInstance.utils.solidityKeccak256(
+        currHash = ethers.utils.solidityKeccak256(
           ["bytes32", "bytes32"],
           [leftChild, rightChild]
         );
       } else {
-        currHash = ethersInstance.utils.solidityKeccak256(
+        currHash = ethers.utils.solidityKeccak256(
           ["bytes32", "bytes32"],
           [rightChild, leftChild]
         );
@@ -76,7 +76,7 @@ const Provider =
         useEffect(() => {
             let unmounted = false;
             const fetchLeaves = async () => {
-                const res = await fetch ('https://ipfs.io/ipfs/QmSNYGH7G4JPYFMU83og7snss16Dq3uwb2D21FgPpVNdbF')
+                const res = await fetch ('https://ipfs.io/ipfs/QmXcaF11fuXnUsCXez79JGgvcg5i4ZjT1v6Uf6FDFH1SuL')
                     .then((res) => res.json())
                     // .then((res) => res.
                     .catch((err) => { console.error(err); return ({ error: err })})
@@ -137,7 +137,7 @@ const Provider =
             // we now have our leafs starting index. Generate an array of entries
             // start at the base of the tree and at index i
             let currentId = matchingLeaf.index;
-            let tree = generateMerkle(leaves, ethers);
+            let tree = generateMerkle(leaves);
 
             //for each level, find the corresponding entry needed and add to our array
             let proofData = [];

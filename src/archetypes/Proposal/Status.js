@@ -179,7 +179,6 @@ const WidgetBar = styled(
 
 		useEffect(() => {
 			if(!votes?.length) return
-			console.log(state, fromWei(votesFor))
 			if (state === 'complete' && fromWei(votesFor) === '0' && yes) {
 				// HACKY ADD FOR SNAPSHOT PROPOSALS
 				setPercent(52); return;
