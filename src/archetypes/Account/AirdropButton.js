@@ -73,8 +73,8 @@ export default styled(
 						{loading 
 							? <SSpinner />
 							: claimed 
-								? 'Airdrop claimed'
-								: 'Claim airdrop'
+								? 'Claimed'
+								: 'Claim '
 						}
 				</Button>
 				<Modal title="Participation Agreement" visible={showModal} onCancel={() => { setShowModal(false)}} 
@@ -90,8 +90,8 @@ export default styled(
 								{loading 
 									? <SSpinner />
 									: claimed 
-										? 'Airdrop claimed'
-										: 'Claim airdrop'
+										? 'Claimed'
+										: 'Claim'
 								}
 						</Button>
 						</Wrap>
@@ -106,6 +106,7 @@ export default styled(
 	`
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		>.paper{
 			margin-right: 0.5em !important;
 		}
