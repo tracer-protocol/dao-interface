@@ -1,19 +1,54 @@
-# ![Tracer Logo](https://raw.githubusercontent.com/flex-dapps/tracer/master/src/assets/logo.svg?token=ARQNWBY5CEHRCBF7X6EP6D277QAHM)
+# Tracer
+https://tracer.finance
+
+This repository contains the dao interface code. It allows users to create and vote on proposals, view proposals, view token allocations, stake and withdraw tokens and view all governors staking their tokens
+
+For more on the Tracer protocol and the Tracer DAO, view the DAO's [Twitter](https://twitter.com/tracer_finance), join the [Discord](https://discord.gg/kvJEwfvyrW) and check out the [Discourse](https://discourse.tracer.finance/)
+
+##### Contributions guide
+## Install
+
+```
+npm install or yarn
+```
+
+## Running Locally
+The codebase is not dependent any environment variables. 
+
+Contract configuration is handled in /src/App.Config.js, where on network change the new configuration will be initialised.
+To run locally
+```
+npm run start or yarn start
+```
+
+## Deployment
+Deployments will be made automatically on merge to master. To simulate deployment locally run
+```
+npm run build or yarn build
+```
+
+and test the production build at
+
+```
+npx serve ./build
+```
+
+or any other static file serving tool.
 
 
-Generating IPFS content 
-* HTML editor [https://html-online.com/editor/](https://html-online.com/editor/)
-* Compress it [https://www.textfixer.com/html/compress-html-compression.php](https://www.textfixer.com/html/compress-html-compression.php)
+# Development Notes
+There are still a few things that arent ideal in terms of development.
+### Text to Proposal Mapping
+Initially there was no proposalUri stored in the contracts. This required an external DB mapping between proposals and their information. This will soon be replaced in favour of snapshot integration.
 
-Post to ipfs in the format of 
-{
-   "title":"Sigma Prime Audit",
-   "summary":"Lion's Mane recommends that the Tracer DAO should evaluate engaging Sigma Prime for a security audit of Tracer’s code",
-   "text":"<p>HTML TEXT</p>",
-   "function_call":"transfer", 
-   // from here its just function params so can be whatever
-   "account":"0x9CE6e6E4D9C9d6163258Db90a4AAB86ef4d1F7D5",
-   "amount":"112050",
-   "discourse_url":"https://discourse.tracer.finance/t/sigma-prime-audit/74",
-   "currency":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
-}
+### Distributions Pie Chart
+Since this is a display of known token allocations, you must manually enter in the descriptions of each of the parties respectively.
+This mapping can be found at /src/libs/tracer/dao.addresses.json. To add an address to this list simply create a new entry into that mapping by following a previous example.
+
+Currently the query only fetchers the top 4 holders, so you'll also need to update /src/libs/tracer/members.js to fetch more top holders depending on how many we want to display. 
+
+Finally, src/archetypes/Member/Chart.js has a fixed list of colours used for each top holder, so you may need to append additional colours. 
+
+
+# Credit
+The contents of this repository were largely contributed by the elastic Midnight Swami and the individuals at [Flexdapps](https://flexdapps.com/).
