@@ -43,5 +43,8 @@ const ImportAliasesPlugin = createWebpackOverridePlugin(({ webpackConfig }) => {
 })
 
 module.exports = {
+	babel: {
+		plugins: ['babel-plugin-styled-components'],
+	},
 	plugins: [AbsoluteImportsPlugin, ImportAliasesPlugin],
 }
