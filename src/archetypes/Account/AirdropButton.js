@@ -65,7 +65,7 @@ export default styled(
 			? 	
 				<>
 				<Button 
-					type='primary'
+					type='inverse'
 					className={`account-button -connected ${className}`}
 					onClick={(e) => { e.preventDefault(); !claimed && setShowModal(true) }}
 					>

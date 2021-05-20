@@ -13,7 +13,7 @@ export default styled(
 
 		return status === 'CONNECTED'
 			? 	<Button 
-					type='primary'
+					type='inverse'
 					className={`account-button -connected ${className}`}
 					onClick={disconnect}
 					>
@@ -21,7 +21,7 @@ export default styled(
 					{truncateString(address)}
 				</Button>
 			: 	<Button 
-					type='primary'
+					type='inverse'
 					className={`account-button -disconnected ${className}`}
 					onClick={connect}
 					>

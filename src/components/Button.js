@@ -1,34 +1,20 @@
-import React from 'react';
-import styled from 'styled-components'
 import { Button } from 'antd'
+import styled, { css } from 'styled-components'
 
-export default styled(
-	({
-		children,
-		...props
-	}) =>
-		<Button {...props}>{children}</Button>
-	)
-	`
-		background: var(--color-light);
-		border: none;
-		color: var(--color-primary);
-		border-radius: 1.4em;
-		padding: 4px 18px;
-		color: var(--color-primary);
-		
-		&:hover{
-			color: var(--color-primary);
-		}
+export default styled(Button)`
+	${props =>
+		props.type === 'inverse' &&
+		css`
+			&&& {
+				background: var(--color-inverse);
+				color: var(--text-color-inverse);
+			}
 
-		&.ant-btn-lg {
-			padding: 6.4px 30px;
-		}
-
-		&.ant-btn-primary{
-			background: var(--color-primary);
-			color: var(--color-light);
-		}
-
-		${({onClick}) => onClick && `cursor: pointer;`}
-	`
+			&&&:hover {
+				background: var(--color-inverse-muted);
+			}
+			&&&:active {
+				background: var(--color-inverse);
+			}
+		`}
+`

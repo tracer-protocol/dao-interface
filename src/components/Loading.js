@@ -48,7 +48,7 @@ export default styled(
 		left: 0;
 		height: 5px;
 		width: 0;
-		background: #1890ff;
+		background: var(--color-primary);
 		transition: none 0s ease-out;
 	}
 

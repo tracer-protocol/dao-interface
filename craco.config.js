@@ -42,9 +42,23 @@ const ImportAliasesPlugin = createWebpackOverridePlugin(({ webpackConfig }) => {
 	return webpackConfig
 })
 
+const CracoLessPlugin = {
+	plugin: require('craco-less'),
+	options: {
+		lessLoaderOptions: {
+			lessOptions: {
+				modifyVars: {
+					hack: `true;@import "${require.resolve('./src/App.Style.less')}";`,
+				},
+				javascriptEnabled: true,
+			},
+		},
+	},
+}
+
 module.exports = {
 	babel: {
 		plugins: ['babel-plugin-styled-components'],
 	},
-	plugins: [AbsoluteImportsPlugin, ImportAliasesPlugin],
+	plugins: [AbsoluteImportsPlugin, ImportAliasesPlugin, CracoLessPlugin],
 }
