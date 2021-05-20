@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components'
 import { Panel, Button, Max } from '@components'
-import { Row, Col, Typography, Form, Input, Switch as AntSwitch } from 'antd'
+import { Row, Col, Form, Input, Switch as AntSwitch } from 'antd'
 import { useDao, useTracer } from '@libs/tracer'
 import { Account } from '@archetypes'
 import { useAccount } from '@libs/web3'

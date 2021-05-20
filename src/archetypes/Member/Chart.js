@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components'
 import { DataLoader } from '@components'
 import { KnownAddresses, useTopHolders, useTracer } from '@libs/tracer'

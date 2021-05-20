@@ -1,7 +1,6 @@
 import { useEffect, useState, createContext, useContext, useReducer } from 'react'
 import ipfsCore from 'ipfs-core'
 import { useNetwork, useAccount } from '@libs/web3'
-import testData from './data';
 
 // TODO - add a network ID so you can properly create proposals on testnet
 // dao-map will block any proposal creation on testnet since it validates the proposal

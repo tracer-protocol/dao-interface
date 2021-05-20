@@ -145,8 +145,6 @@ const WidgetBar = styled(
 			totalStaked
 		} = useProposal(id)
 
-		const { refetch } = useProposals()
-
 		const formRef = React.createRef()
 
 		const {
@@ -335,11 +333,7 @@ const Panel = styled(
 		id,
 		className,
 	}) => {
-		const {
-			totalStaked,
-			quorumDivisor,
-			userStaked
-		} = useDao()
+		const { userStaked } = useDao()
 
 		const {
 			userBalance
@@ -352,7 +346,7 @@ const Panel = styled(
 			>
 
 			<div className='title'>
-				<a href='https://vote.tracer.finance/' target='_blank'><Button size='large' type='primary'>Vote On Snapshot</Button></a>
+				<a href='https://vote.tracer.finance/' target='_blank' rel="noreferrer noopener"><Button size='large' type='primary'>Vote On Snapshot</Button></a>
 			</div>
 
 			<Row  justify="center">

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Typography } from 'antd';
 
 const List = styled.ol
 `

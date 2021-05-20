@@ -84,6 +84,7 @@ export default styled(
 				>
 				<DropdownContainer>
 					<StyledDropdown overlay={menu} trigger={['click']}>
+						{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
 						<a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
 							Sort by: {map[sort]} <DownOutlined />
 						</a>

@@ -5,11 +5,8 @@ import { Typography, Row, Col } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Address, Panel, Skeleton } from '@components'
 import { useProposal } from '@libs/tracer'
-import { proposalFunctions } from '@archetypes/Proposal/config'
 import Proposal from './'
-
 import DOMPurify from 'dompurify';
-import { useFileStorage } from '../../libs/tracer';
 
 const CleanHTML = styled(({ className, html }) => {
 	var clean = DOMPurify.sanitize(html);
