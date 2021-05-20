@@ -7,6 +7,19 @@ const path = require('path')
 //
 const createWebpackOverridePlugin = overrideWebpackConfig => ({ plugin: { overrideWebpackConfig } })
 
+// Allows imports to refer to the `src` directory as though its contents were their own node modules
+//
+// Before:
+// import MyComponent from '../../components/MyComponent'
+//
+// After:
+// import MyComponent from 'components/MyComponent'
+//
+const AbsoluteImportsPlugin = createWebpackOverridePlugin(({ webpackConfig }) => {
+	webpackConfig.resolve.modules.push('src')
+	return webpackConfig
+})
+
 // Provides a number of @<ident> import aliases to the contents of the `src` directory
 //
 // Before:
@@ -30,5 +43,5 @@ const ImportAliasesPlugin = createWebpackOverridePlugin(({ webpackConfig }) => {
 })
 
 module.exports = {
-	plugins: [ImportAliasesPlugin],
+	plugins: [AbsoluteImportsPlugin, ImportAliasesPlugin],
 }
