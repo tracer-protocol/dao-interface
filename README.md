@@ -9,7 +9,7 @@ For more on the Tracer protocol and the Tracer DAO, view the DAO's [Twitter](htt
 ## Install
 
 ```
-npm install or yarn
+npm install --legacy-peer-deps or yarn
 ```
 
 ## Running Locally
