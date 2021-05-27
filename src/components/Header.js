@@ -183,24 +183,27 @@ const StyledTracerBlogLogo = styled(TracerBlogLogo)`
 `
 
 const StyledMenu = styled(Menu)`
+	display: flex;
 	height: 8.6rem;
-	line-height: 8.6rem;
 `
 const StyledMenuItem = styled(Menu.Item)`
+	&&& {
+		display: flex;
+		align-items: stretch;
+	}
 	font-size: 1.8rem;
-	line-height: 8.6rem;
 
 	> a {
+		display: flex;
+		align-items: center;
 		transition: color 500ms ease;
 	}
 `
 const SubMenu = styled(StyledMenu)`
 	height: 4rem;
-	line-height: 4rem;
 `
 const SubMenuItem = styled(StyledMenuItem)`
 	font-size: 1.5rem;
-	line-height: 4rem;
 `
 
 const MenuButton = styled(MenuOutlined)`
@@ -217,8 +220,10 @@ const CloseMenuButton = styled(CloseOutlined)`
 `
 
 const UserBalance = styled.span`
-	font-size: 1.2rem;
+	flex-shrink: 0;
 	margin-right: 1em;
+	font-size: 1.2rem;
+
 	> * {
 		line-height: 1.2em;
 		text-align: right;
