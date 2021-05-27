@@ -43,9 +43,9 @@ const renderCustomizedLabel = (props) => {
             <g>
                 <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
                 <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
-                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey + (percent < 0.03 ? 5 : 0)} fontWeight={active ? '700': '400'} textAnchor={textAnchor} fill="#333">{`${payload.name ? payload.name : payload.address}`}</text>
+                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey + (percent < 0.03 ? 5 : 0)} fontWeight={active ? '700': '400'} textAnchor={textAnchor} fill="var(--color-light)">{`${payload.name ? payload.name : payload.address}`}</text>
                 {percent > 0.03 ? // only show if its greater than 10% otherwise it will probably sit on top of another
-                    <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
+                    <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="var(--color-primary)">
                         {`${payload.value} TCR (${(percent * 100).toFixed(2)}%)`}
                     </text>
                 : ""}
@@ -99,7 +99,7 @@ const InfoBox = styled(({ className, addressInfo, open, setOpen }) => {
     );
 })
 `
-    background: #fff;
+    background: var(--color-popover-background);
     padding: 1rem 3rem;
     box-shadow: 0 0rem 2rem 3rem rgba(0,0,0,0.02);
     border-radius: 5px;
@@ -151,7 +151,7 @@ export default styled(
 
         const data = parseData(topHolders, totalSupply || "1000000000000000000000000000")
 
-        const COLORS = ['#0000bd', '#4848ED', '#5A7FFF', '#83ADFE', '#B8DDFF', '#C7EBFF'];
+        const COLORS = ['#0E38CF', '#3DA8F5', '#3D73F5', '#2954F0', '#01227F', '#0D0F55'];
 
         const renderActiveShape = (props) => {
             const { 
@@ -240,6 +240,7 @@ export default styled(
                                 data.map((_entry, index) => 
                                     <Cell 
                                         fill={COLORS[index % COLORS.length]}
+                                        stroke="none"
                                         opacity={activeIndex !== null && activeIndex !== index ? 0.5 : 1}
                                     />
                                 )
