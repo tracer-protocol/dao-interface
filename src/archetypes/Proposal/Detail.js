@@ -3,9 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import styled from 'styled-components'
 import { Typography, Row, Col } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Address, Panel, Skeleton } from '@components'
+import Address from 'components/Address'
+import Panel from 'components/Panel'
+import Skeleton from 'components/Skeleton'
 import { useProposal } from '@libs/tracer'
-import Proposal from './'
+import ProposalFunctionDetail from './FunctionDetail'
+import ProposalStatus from './Status'
 import DOMPurify from 'dompurify';
 
 const CleanHTML = styled(({ className, html }) => {
@@ -92,7 +95,7 @@ export default styled(
 								</Skeleton>
 							</Typography.Title>
 
-							<Proposal.FunctionDetail ipfsData={ipfsData} />
+							<ProposalFunctionDetail ipfsData={ipfsData} />
 						</div>
 						
 						<p>
@@ -106,7 +109,7 @@ export default styled(
 					span={10}
 					>
 					<Panel>
-						<Proposal.Status.Panel 
+						<ProposalStatus.Panel 
 							id={id}
 						/>
 					</Panel>

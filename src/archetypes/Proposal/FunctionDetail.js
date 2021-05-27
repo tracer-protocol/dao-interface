@@ -1,6 +1,6 @@
-import { proposalFunctions } from '@archetypes/Proposal/config';
+import { proposalFunctions } from './config';
 import styled from 'styled-components';
-import { Skeleton } from '@components';
+import Skeleton from 'components/Skeleton';
 import { Typography } from 'antd';
 
 export default styled(

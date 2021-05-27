@@ -1,4 +1,6 @@
-import { Button, DataLoader, Filter } from 'components'
+import Button from 'components/Button'
+import DataLoader from 'components/DataLoader'
+import Filter from 'components/Filter'
 import { useProposals } from 'libs/tracer'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components'
 import { useAccount } from '@libs/web3'
 import { useAirdrop } from '@libs/tracer';
-import { Button } from '@components'
-import { add } from '@components/Notification';
-import { Spinner } from '@components/DataLoader';
-import ParticipationAgreement from '@components/ParticipationAgreement';
+import Button from 'components/Button'
+import { add } from 'components/Notification';
+import { Spinner } from 'components/DataLoader';
+import ParticipationAgreement from 'components/ParticipationAgreement';
 import { Modal, Checkbox } from 'antd';
 
 const SSpinner = styled(Spinner)

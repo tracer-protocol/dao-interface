@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { useAccount } from '@libs/web3'
-import { Button } from '@components'
+import Button from 'components/Button'
 import { truncateString } from '@util/helpers'
 
 export default styled(

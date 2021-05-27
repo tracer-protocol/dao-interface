@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components'
-import { Panel, Button, Max } from '@components'
+import Panel from 'components/Panel'
+import Button from 'components/Button'
+import Max from 'components/Max'
 import { Row, Col, Form, Input, Switch as AntSwitch } from 'antd'
 import { useDao, useTracer } from '@libs/tracer'
-import { Account } from '@archetypes'
+import AccountButton from './Button'
 import { useAccount } from '@libs/web3'
 import Web3 from 'web3';
 
@@ -119,7 +121,7 @@ export default styled(
 									{
 										status !== 'CONNECTED'
 										?  
-											<Account.Button className="button"/>
+											<AccountButton className="button"/>
 										:
 											<Button 
 												size='large' 

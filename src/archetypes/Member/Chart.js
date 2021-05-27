@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components'
-import { DataLoader } from '@components'
+import DataLoader from 'components/DataLoader'
 import { KnownAddresses, useTopHolders, useTracer } from '@libs/tracer'
 import Web3 from 'web3';
 

@@ -2,7 +2,7 @@ import { truncateString } from 'util/helpers'
 
 import { StarFilled } from '@ant-design/icons'
 import { Typography } from 'antd'
-import { Skeleton } from 'components'
+import Skeleton from 'components/Skeleton'
 import { useProposal } from 'libs/tracer'
 import { useAccount } from 'libs/web3'
 import React from 'react'

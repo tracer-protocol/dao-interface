@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
-import { Tag } from '@components'
+import Tag from 'components/Tag'
 
 export default styled(
 	({

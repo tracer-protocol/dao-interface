@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import styled from 'styled-components'
-import { DataLoader } from '@components'
+import DataLoader from 'components/DataLoader'
 import { useMembers } from '@libs/tracer'
 import Teaser from './Teaser'
 import { Menu, Dropdown, Typography } from 'antd';

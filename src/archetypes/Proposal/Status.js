@@ -3,14 +3,17 @@ import styled from 'styled-components'
 import { Statistic, Typography, Button as AButton, Row, Form, Modal, Input } from 'antd';
 import moment from 'moment'
 import { upperFirst } from 'lodash'
-import { Tag, Button as StakeButton, Max, Button } from '@components'
+import Tag from 'components/Tag'
+import StakeButton from 'components/Button'
+import Max from 'components/Max'
+import Button from 'components/Button'
 import { numberToMaxDb, fromWei } from '@util/helpers'
 import { useProposal, useProposals, useDao, useTracer } from '@libs/tracer'
 import { Link } from 'react-router-dom';
 import { useAccount } from '@libs/web3';
 import Web3 from 'web3';
 import { statusOptions } from './config'
-import { Account } from '@archetypes'
+import Account from 'archetypes/Account'
 
 const Info = styled(
 	({

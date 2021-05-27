@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import styled from 'styled-components'
 import { Form, Input, Row, Col, Typography, Modal } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Account } from '@archetypes'
-import { Button, Panel } from '@components'
+import Account from 'archetypes/Account'
+import Button from 'components/Button'
+import Panel from 'components/Panel'
 import { useDao, useTracer } from '@libs/tracer'
 import { useAccount } from '@libs/web3'
 import { fromWei } from '@util/helpers'
-import Proposal from './'
+import ProposalFunctions from './Functions'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -117,7 +118,7 @@ export default styled(
 						span={10}
 						>
 						<Panel className="reduce-pad top">
-							<Proposal.Functions formRef={formRef}/>
+							<ProposalFunctions formRef={formRef}/>
 						</Panel>
 
 						<Panel className="reduce-pad">
