@@ -56,9 +56,19 @@ const CracoLessPlugin = {
 	},
 }
 
+const CircularDependencyPlugin = createWebpackOverridePlugin(({ webpackConfig }) => {
+	webpackConfig.plugins.push(
+		new (require('circular-dependency-plugin'))({
+			exclude: /node_modules/,
+			allowAsyncCycles: false,
+		})
+	)
+	return webpackConfig
+})
+
 module.exports = {
 	babel: {
 		plugins: ['babel-plugin-styled-components'],
 	},
-	plugins: [AbsoluteImportsPlugin, ImportAliasesPlugin, CracoLessPlugin],
+	plugins: [AbsoluteImportsPlugin, ImportAliasesPlugin, CracoLessPlugin, CircularDependencyPlugin],
 }

@@ -15,6 +15,7 @@
     "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.12.0",
     "bignumber.js": "^9.0.1",
+    "circular-dependency-plugin": "^5.2.2",
     "craco-less": "^1.17.1",
     "dompurify": "^2.2.6",
     "es6-shim": "^0.35.6",
@@ -61,6 +62,7 @@
       "react-app/jest"
     ],
     "rules": {
+      "import/no-cycle": "warn",
       "import/no-anonymous-default-export": "off"
     }
   },
