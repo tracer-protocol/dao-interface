@@ -1,6 +1,6 @@
 import { useState, createContext, useContext } from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import { Notification } from '@components'
+import Notification from 'components/Notification'
 
 const Context = createContext({});
 
