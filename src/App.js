@@ -7,7 +7,7 @@ import { Header, Loading, Notification, WrapContainer } from 'components'
 import { GraphProvider } from 'libs/graph'
 import { TracerProvider } from 'libs/tracer'
 import { Web3Provider } from 'libs/web3'
-import { Route, HashRouter as Router, Switch } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import { Allocation, Dashboard, Proposal, ProposalNew, Proposals } from 'routes'
 import styled from 'styled-components'
 
