@@ -3,7 +3,7 @@ import 'App.Style.less'
 import { Layout } from 'antd'
 import { networkConfig } from 'App.Config'
 import { Base as StyleBase, Fonts as StyleFonts, Layout as StyleLayout, Theme as StyleTheme } from 'App.Style'
-import { Header, Loading, Notification, WrapContainer } from 'components'
+import { Footer, Header, Loading, Notification, WrapContainer } from 'components'
 import { GraphProvider } from 'libs/graph'
 import { TracerProvider } from 'libs/tracer'
 import { Web3Provider } from 'libs/web3'
@@ -55,6 +55,7 @@ const Details = () => (
 					</Route>
 				</Switch>
 			</StyledContent>
+			<Footer />
 		</Router>
 	</StyledLayout>
 )

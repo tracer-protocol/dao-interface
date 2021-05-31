@@ -17,7 +17,7 @@ import { useMemo } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-const menu = [
+export const menu = [
 	{ title: 'Proposals', url: '/', exact: true },
 	{ title: 'Allocation', url: '/allocation/chart', matchUrl: '/allocation' },
 	{ title: 'Stake', url: '/dashboard' },
