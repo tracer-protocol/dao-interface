@@ -7,8 +7,8 @@ const Tag = styled(({ checkable, ...props }) =>
 	font-size: var(--font-size-normal);
 	padding: 6.4px var(--btn-padding-horizontal-lg);
 	height: 40px;
-	line-height: 1.4em;
-	font-size: 1.6rem;
+	line-height: 1.5715;
+	font-size: 16px;
 	border: 1px solid var(--color-border-base, black);
 
 	&:not(.ant-tag-checkable-checked):hover {

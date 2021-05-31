@@ -21,6 +21,10 @@ const StyledContent = styled(({ children, ...props }) => (
 	</Layout.Content>
 ))`
 	padding: 3.5rem 0;
+
+	@media screen and (max-width: 960px) {
+		padding: 1rem 0;
+	}
 `
 
 const Details = () => (

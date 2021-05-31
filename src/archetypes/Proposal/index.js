@@ -1,17 +1,15 @@
-import Teaser from './Teaser'
-import List from './List'
-import Detail from './Detail'
 import Create from './Create'
-import Status from './Status'
-import Functions from './Functions'
+import Detail from './Detail'
 import FunctionDetail from './FunctionDetail'
+import Functions from './Functions'
+import List from './List'
+import Teaser from './Teaser'
 
 export default {
-	Teaser,
-	List,
-	Detail,
 	Create,
-	Status,
-	Functions,
+	Detail,
 	FunctionDetail,
+	Functions,
+	List,
+	Teaser,
 }

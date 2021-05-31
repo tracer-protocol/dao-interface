@@ -6,6 +6,7 @@ export default styled(Button)`
 		props.type === 'inverse' &&
 		css`
 			&&& {
+				border: none;
 				background: var(--color-inverse);
 				color: var(--text-color-inverse);
 			}
