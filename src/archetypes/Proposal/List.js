@@ -16,6 +16,7 @@ export default styled(({ className }) => {
 		<div className={className}>
 			<div className="topbar">
 				<Filter
+					title="Proposals"
 					options={Object.values(statusOptions)}
 					defaultSelected={[statusOptions.open.key]}
 					onChange={type => setFilter('state', type[0])}

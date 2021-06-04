@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 export default function Filter({
+	title = '',
 	exclusive = true,
 	options = [],
 	defaultSelected = [],
@@ -17,7 +18,6 @@ export default function Filter({
 	)
 
 	const handleChange = (key, checked) => {
-		console.log('handleChange', key, checked)
 		setTags(
 			tags.map(tag => {
 				if (key) {
@@ -33,7 +33,6 @@ export default function Filter({
 
 	const broadcastState = () => {
 		const active = tags.map(tag => (tag.checked === true ? tag.key : null)).filter(t => t)
-		console.log('broadcastState', active)
 		onChange(active)
 	}
 
@@ -70,7 +69,7 @@ export default function Filter({
 			</Desktop>
 			<Mobile>
 				<StyledFilter {...props}>
-					<Title>Proposals</Title>
+					<Title>{title}</Title>
 					<FlexSpace />
 					<Dropdown overlay={filterMenu} placement="bottomRight">
 						<DropdownButton size="large" type="text">
