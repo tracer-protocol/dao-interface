@@ -30,9 +30,9 @@ const Provider =
 		let [contract, setContract] = useState()
 
 		const initialState = {
-			totalStaked: 0,
-			userStaked: 0,
-			proposalThreshold: 0,
+			totalStaked: '0',
+			userStaked: '0',
+			proposalThreshold: '0',
 			quorumDivisor: 0
 		}
 		const reducer = (state, action) => {
