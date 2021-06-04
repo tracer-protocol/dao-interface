@@ -18,7 +18,9 @@ export default function Footer() {
 
 					<FooterLinks>
 						{menu.map(({ title, url }) => (
-							<FooterLink to={url}>{title}</FooterLink>
+							<FooterLink key={url} to={url}>
+								{title}
+							</FooterLink>
 						))}
 					</FooterLinks>
 
