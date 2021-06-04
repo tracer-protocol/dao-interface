@@ -3,6 +3,15 @@ import styled, { css } from 'styled-components'
 
 export default styled(Button)`
 	${props =>
+		(props.type === undefined || props.type === 'default') &&
+		css`
+			&&&:hover {
+				color: white;
+				background: var(--color-primary);
+				border-color: var(--color-primary);
+			}
+		`}
+	${props =>
 		props.type === 'inverse' &&
 		css`
 			&&& {
