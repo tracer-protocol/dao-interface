@@ -36,6 +36,7 @@ export default styled(({ className }) => {
 
 	return (
 		<Layout.Header className={className}>
+			<HeaderBackground />
 			<Row desktop>
 				<Link to="/">
 					<StyledTracerGovernLogo />
@@ -118,10 +119,82 @@ export default styled(({ className }) => {
 		</Layout.Header>
 	)
 })`
+	position: relative;
 	align-items: center;
 	justify-content: space-between;
 	height: auto;
 	padding: 0;
+	background: none;
+
+	> * {
+		position: relative;
+	}
+`
+
+const HeaderBackground = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #03065e;
+	z-index: 0;
+	overflow: hidden;
+
+	&:before,
+	&:after {
+		content: '';
+		height: 100%;
+		position: absolute;
+	}
+	&:before {
+		top: 0;
+		left: 0;
+		width: 50%;
+		transform: skewX(60deg);
+		background: #00217c;
+	}
+	&:after {
+		top: 0;
+		left: 0;
+		width: calc(50% - 400px);
+		background: #002c89;
+		box-shadow: 0 2rem 10rem rgba(0, 0, 0, 0.2);
+	}
+
+	@media screen and (max-width: 1600px) {
+		&:after {
+			width: 30%;
+		}
+	}
+	@media screen and (max-width: 1200px) {
+		&:before {
+			width: 45%;
+		}
+		&:after {
+			width: 35%;
+		}
+	}
+
+	@media screen and (max-width: 960px) {
+		&:before {
+			width: 95%;
+		}
+		&:after {
+			width: 50%;
+		}
+	}
+
+	@media screen and (max-width: 640px) {
+		&:after {
+			width: 75%;
+		}
+	}
+	@media screen and (max-width: 440px) {
+		&:after {
+			width: 100%;
+		}
+	}
 `
 
 const Row = styled(WrapContainer)`
