@@ -8,6 +8,7 @@ import { ReactComponent as TracerGovernLogo } from 'assets/tracer_govern.svg'
 import { ReactComponent as TracerLogo } from 'assets/tracer_logo.svg'
 import { ReactComponent as TracerPerpetualsLogo } from 'assets/tracer_perps.svg'
 import FlexSpace from 'components/FlexSpace'
+import HeaderSiteSwitcher from 'components/HeaderSiteSwitcher'
 import MobileSocialLogos from 'components/MobileSocialLogos'
 import WrapContainer from 'components/WrapContainer'
 import useBooleanState from 'hooks/useBooleanState'
@@ -38,9 +39,7 @@ export default styled(({ className }) => {
 		<Layout.Header className={className}>
 			<HeaderBackground />
 			<Row desktop>
-				<Link to="/">
-					<StyledTracerGovernLogo />
-				</Link>
+				<HeaderSiteSwitcher />
 				<FlexSpace />
 				<StyledMenu theme="dark" mode="horizontal" selectedKeys={selectedMenuKeys}>
 					{menu.map(({ title, url, exact }) => (
