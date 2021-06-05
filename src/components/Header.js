@@ -149,6 +149,7 @@ const HeaderBackground = styled.div`
 	&:before {
 		top: 0;
 		left: 0;
+		height: 16rem;
 		width: 50%;
 		transform: skewX(60deg);
 		background: #00217c;
@@ -166,9 +167,9 @@ const HeaderBackground = styled.div`
 			width: 30%;
 		}
 	}
-	@media screen and (max-width: 1200px) {
+	@media screen and (max-width: 1300px) {
 		&:before {
-			width: 45%;
+			width: 50%;
 		}
 		&:after {
 			width: 35%;
@@ -186,7 +187,7 @@ const HeaderBackground = styled.div`
 
 	@media screen and (max-width: 640px) {
 		&:after {
-			width: 75%;
+			width: 70%;
 		}
 	}
 	@media screen and (max-width: 440px) {
