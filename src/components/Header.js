@@ -1,6 +1,5 @@
 import { fromWei, numberToMaxDb } from 'util/helpers'
 
-import { CloseOutlined, MenuOutlined } from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
 import { Account, Network } from 'archetypes'
 import { ReactComponent as TracerBlogLogo } from 'assets/tracer_blog.svg'
@@ -11,6 +10,7 @@ import FlexSpace from 'components/FlexSpace'
 import HeaderSiteSwitcher from 'components/HeaderSiteSwitcher'
 import MobileSocialLogos from 'components/MobileSocialLogos'
 import WrapContainer from 'components/WrapContainer'
+import { AnimatePresence, motion } from 'framer-motion'
 import useBooleanState from 'hooks/useBooleanState'
 import { useDao, useTracer } from 'libs/tracer'
 import { useAccount } from 'libs/web3'
@@ -67,43 +67,46 @@ export default styled(({ className }) => {
 				</Link>
 				<FlexSpace />
 				<div style={{ height: '8.6rem' }} />
-				<MenuButton onClick={toggleMobileMenu} />
+				<MobileMenuButton close={showMobileMenu} onClick={toggleMobileMenu} />
 			</Row>
-			<MobileMenu visible={showMobileMenu}>
-				<CloseMenuButton onClick={toggleMobileMenu} />
-				<MobileMenuItem>Menu</MobileMenuItem>
-				{menu.map(({ title, url, exact }) => (
-					<MobileMenuItem key={titleToKey(title)}>
-						<NavLink exact={exact} to={url} onClick={toggleMobileMenu}>
-							{title}
-						</NavLink>
-					</MobileMenuItem>
-				))}
-				<FlexSpace />
-				<MobileMenuItem>
-					<a href="https://tracer.finance">
-						<StyledTracerLogo />
-					</a>
-				</MobileMenuItem>
-				<MobileMenuItem>
-					<a href="https://tracer.finance/exchange/">
-						<StyledTracerPerpetualsLogo />
-					</a>
-				</MobileMenuItem>
-				<MobileMenuItem>
-					<Link to="/" onClick={toggleMobileMenu}>
-						<StyledTracerGovernLogo />
-					</Link>
-				</MobileMenuItem>
-				<MobileMenuItem>
-					<a href="https://tracer.finance/radar">
-						<StyledTracerBlogLogo />
-					</a>
-				</MobileMenuItem>
-				<MobileMenuItem>
-					<MobileSocialLogos />
-				</MobileMenuItem>
-			</MobileMenu>
+			<AnimatePresence>
+				{showMobileMenu && (
+					<MobileMenu initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+						<MobileMenuItem>Menu</MobileMenuItem>
+						{menu.map(({ title, url, exact }) => (
+							<MobileMenuItem key={titleToKey(title)}>
+								<NavLink exact={exact} to={url} onClick={toggleMobileMenu}>
+									{title}
+								</NavLink>
+							</MobileMenuItem>
+						))}
+						<FlexSpace />
+						<MobileMenuItem>
+							<a href="https://tracer.finance">
+								<StyledTracerLogo />
+							</a>
+						</MobileMenuItem>
+						<MobileMenuItem>
+							<a href="https://tracer.finance/exchange/">
+								<StyledTracerPerpetualsLogo />
+							</a>
+						</MobileMenuItem>
+						<MobileMenuItem>
+							<Link to="/" onClick={toggleMobileMenu}>
+								<StyledTracerGovernLogo />
+							</Link>
+						</MobileMenuItem>
+						<MobileMenuItem>
+							<a href="https://tracer.finance/radar">
+								<StyledTracerBlogLogo />
+							</a>
+						</MobileMenuItem>
+						<MobileMenuItem>
+							<MobileSocialLogos />
+						</MobileMenuItem>
+					</MobileMenu>
+				)}
+			</AnimatePresence>
 			<Row subMenu visible={selectedMenuKeys.includes('allocation')}>
 				<SubMenu theme="dark" mode="horizontal" selectedKeys={selectedMenuKeys}>
 					{allocationSubmenu.map(({ title, url, exact }) => (
@@ -279,17 +282,80 @@ const SubMenuItem = styled(StyledMenuItem)`
 	font-size: 1.5rem;
 `
 
-const MenuButton = styled(MenuOutlined)`
-	font-size: 3rem;
+const MobileMenuButton = styled(props => (
+	<button type="button" {...props}>
+		<div className="icon">
+			<span />
+			<span />
+			<span />
+		</div>
+	</button>
+))`
+	position: relative;
+	display: block;
+	width: 6rem;
+	height: 8rem;
 	cursor: pointer;
-`
-const CloseMenuButton = styled(CloseOutlined)`
-	position: absolute;
-	top: 4.3rem;
-	right: 3.3rem;
-	transform: translateY(-50%);
-	font-size: 3rem;
-	cursor: pointer;
+	font: inherit;
+	color: inherit;
+	text-transform: none;
+	background-color: transparent;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	z-index: 1000;
+
+	&&&:hover,
+	&&&:focus,
+	&&&:active {
+		opacity: 1;
+	}
+
+	> .icon {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 3rem;
+		height: 2rem;
+		transform: translate(-50%, -50%);
+	}
+
+	> .icon > span {
+		position: absolute;
+		top: 40;
+		left: 0;
+		display: block;
+		width: 100%;
+		height: 0.4rem;
+		background: var(--color-light);
+		transition: all 250ms ease;
+	}
+	> .icon > span:nth-child(1) {
+		transform-origin: 10% 10%;
+	}
+	> .icon > span:nth-child(2) {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	> .icon > span:nth-child(3) {
+		transform-origin: 10% 90%;
+		top: auto;
+		bottom: 0;
+	}
+
+	${props =>
+		props.close &&
+		css`
+			> .icon > span:nth-child(1) {
+				transform: rotate(45deg);
+			}
+			> .icon > span:nth-child(2) {
+				opacity: 0;
+			}
+			> .icon > span:nth-child(3) {
+				transform: rotate(-45deg);
+			}
+		`}
 `
 
 const UserBalance = styled.span`
@@ -303,8 +369,8 @@ const UserBalance = styled.span`
 	}
 `
 
-const MobileMenu = styled.div`
-	display: none;
+const MobileMenu = motion(styled.div`
+	display: flex;
 	flex-direction: column;
 	width: 100%;
 	height: 100%;
@@ -315,13 +381,7 @@ const MobileMenu = styled.div`
 	color: var(--color-light);
 	background: var(--color-popover-lighter-background);
 	z-index: 999;
-
-	${props =>
-		props.visible &&
-		css`
-			display: flex;
-		`}
-`
+`)
 const MobileMenuItem = styled.div`
 	width: 100%;
 	height: 8.6rem;
