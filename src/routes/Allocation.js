@@ -1,4 +1,3 @@
-import React from 'react';
-import { Member } from '@archetypes'
+import { Member } from 'archetypes'
 
-export default Member;
+export default Member

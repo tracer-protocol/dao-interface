@@ -1,172 +1,192 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import styled from 'styled-components'
-import { Panel, Button, Max } from '@components'
-import { Row, Col, Typography, Form, Input, Switch as AntSwitch } from 'antd'
 import { useDao, useTracer } from '@libs/tracer'
-import { Account } from '@archetypes'
 import { useAccount } from '@libs/web3'
-import Web3 from 'web3';
+import { Form, Input } from 'antd'
+import Button from 'components/Button'
+import Max from 'components/Max'
+import Panel from 'components/Panel'
+import { useCallback, useRef, useState } from 'react'
+import styled from 'styled-components'
+import Web3 from 'web3'
 
-const Switch = styled(AntSwitch)
-`
-	background: #0000bd;
-`
+import AccountButton from './Button'
 
-export default styled(
-	({
-		className
-	}) => {
+const modes = [
+	{ key: 'stake', title: 'Stake' },
+	{ key: 'withdraw', title: 'Withdraw' },
+]
 
-		const { userStaked, __STAKE, __WITHDRAW } = useDao();
-		const { userBalance } = useTracer()
-		const { status } = useAccount();
-		const [toggle, setToggle] = useState(true);
-		const formRef = React.createRef()
+export default styled(({ className }) => {
+	const { userStaked, __STAKE, __WITHDRAW } = useDao()
+	const { userBalance } = useTracer()
+	const { status } = useAccount()
 
-		const inputMax = (e) => {
-			e.preventDefault();
-			if (toggle) { // stake
-				if (userBalance) { // user has no balance
-					formRef.current.setFieldsValue({ amount: Web3.utils.fromWei(userBalance)})
-				}
-			} else { //withdraw
-				if (userStaked) { // user has not staked
-					formRef.current.setFieldsValue({ amount: Web3.utils.fromWei(userStaked)})
-				}
+	const formRef = useRef()
+	const [mode, setMode] = useState(modes[0]?.key)
+
+	const setFieldToMaxValue = useCallback(
+		event => {
+			event.preventDefault()
+
+			const max = mode === 'stake' ? userBalance : mode === 'withdraw' ? userStaked : false
+			if (!max) return
+
+			formRef.current.setFieldsValue({ amount: Web3.utils.fromWei(max) })
+		},
+		[mode, userBalance, userStaked]
+	)
+
+	const checkValidAmount = useCallback(
+		async (rule, value) => {
+			const amount = parseFloat(value)
+			const balance =
+				mode === 'stake' ? userBalance : mode === 'withdraw' ? parseFloat(Web3.utils.fromWei(userStaked)) : 0
+
+			if (!amount) {
+				const action = mode === 'stake' ? ' to stake' : mode === 'withdraw' ? ' to withdraw' : ''
+				const message = `Please enter an amount${action}`
+				throw new Error(message)
 			}
-		}
 
-		const checkValidAmount = (_rule, value, callback) => {
-			const amount = parseFloat(value);
-			const balance = toggle ? userBalance : parseFloat(Web3.utils.fromWei(userStaked));
-			const message = !toggle ? 'You have not staked enough to withdraw this amount' : 'You dont have enough TCR to stake this amount'
-			if(amount <= balance) {
-				return callback()
-			} else if (!amount) {
-				return callback("Amount is required")
+			if (balance < amount) {
+				const message =
+					mode === 'stake'
+						? "You don't have enough TCR to stake this amount."
+						: mode === 'withdraw'
+						? 'You have not staked enough to withdraw this amount.'
+						: ''
+				throw new Error(message)
 			}
-			return callback(message)
-		};
+		},
+		[mode, userBalance, userStaked]
+	)
 
+	const onToggleChange = useCallback(() => {
+		setMode(mode => modes.find(aMode => aMode.key !== mode)?.key)
+		formRef.current.validateFields(['amount'])
+	}, [])
 
-
-		useEffect(() => {
-		}, [toggle]);
-
-		return (
+	return (
 		<div className={className}>
-			<div className="topbar">
-				<Link to='/proposal/new'>
-					<Button 
-						size='large' 
-						type="primary"
+			<Container>
+				<Toggle className="toggle" options={modes} value={mode} onChange={onToggleChange} />
+				<Panel>
+					<Form
+						layout="vertical"
+						size="large"
+						onFinish={values => {
+							if (mode === 'stake') return __STAKE(Web3.utils.toWei(values.amount))
+							if (mode === 'withdraw') return __WITHDRAW(Web3.utils.toWei(values.amount))
+						}}
+						requiredMark={false}
+						ref={formRef}
+					>
+						<Form.Item
+							label={mode === 'stake' ? 'Amount to Stake' : mode === 'withdraw' ? 'Amount to Withdraw' : ''}
+							name="amount"
+							onChange={event => {
+								event.preventDefault()
+								formRef.current.validateFields(['amount'])
+							}}
+							required={false}
+							rules={[{ validator: checkValidAmount }]}
 						>
-						New Proposal
-					</Button>
-				</Link>
-			</div>
-			<Row gutter="24" justify="center" >
-				<Col span="8">
-					<Panel className="sPanel">
-						<Row className="buttons">
-							<Col span="24" align="right">
-								<Form
-									layout="vertical"
-									size={'large'}
-									onFinish={(values) => {
-										if (toggle) { // stake
-											__STAKE(Web3.utils.toWei(values.amount))
-										} else { // withdraw
-											__WITHDRAW(Web3.utils.toWei(values.amount))
-										}
-									}}
-									requiredMark={false}
-									ref={formRef}
-								>
-									<Switch 
-										checkedChildren="Stake" 
-										unCheckedChildren="Withdraw" 
-										checked={toggle} 
-										onChange={(value) => { 
-											setToggle(value);
-											formRef.current.validateFields(['amount']);
-										}} 
-									/>
-									<Form.Item 
-										label="Amount to Stake" 
-										name="amount"
-										onChange={(e) => {e.preventDefault(); formRef.current.validateFields(['amount']);}}
-										required={false}
-										rules={[
-											{
-												validator: checkValidAmount
-											}
-										]}
-										>
-										<Input type="number"
-											addonAfter={
-												<Max
-													onClick={inputMax}
-												>
-													Max
-												</Max>
-											}
-
-										/>
-									</Form.Item>
-									<Form.Item className="submit">
-									{
-										status !== 'CONNECTED'
-										?  
-											<Account.Button className="button"/>
-										:
-											<Button 
-												size='large' 
-												type="primary"
-												className="button"
-												htmlType="submit"
-												
-												>
-													{toggle ? "Stake" : "Withdraw"}
-											</Button>
-									}	
-									</Form.Item>
-								</Form>
-							</Col>
-						</Row>
-					</Panel>
-				</Col>
-			</Row>
+							<Input type="number" addonAfter={<Max onClick={setFieldToMaxValue}>Max</Max>} />
+						</Form.Item>
+						<Form.Item className="submit">
+							{status !== 'CONNECTED' ? (
+								<AccountButton className="button" />
+							) : (
+								<Button size="large" className="button" htmlType="submit">
+									{mode === 'stake' ? 'Stake' : mode === 'withdraw' ? 'Withdraw' : ''}
+								</Button>
+							)}
+						</Form.Item>
+					</Form>
+				</Panel>
+			</Container>
 		</div>
-		)
-	})
-	`	
-		.topbar{
-			margin-bottom: 4.7rem;
-			text-align: right;
-		}
+	)
+})`
+	display: flex;
+	justify-content: center;
 
-		h4{
-			margin-top: 0!important;
-		}
+	.ant-form-item-label {
+		text-align: center;
+		margin-bottom: 1rem;
 
-		.sPanel {
-			max-width: 400px;
+		> * {
+			font-size: var(--font-size-medium);
+			color: var(--color-primary);
 		}
+	}
 
-		.buttons {
-			padding-top: 1.5rem;
-		}
+	.submit {
+		text-align: center;
+		margin-bottom: 0;
 
 		.button {
-			margin: auto;
+			margin: 2rem auto 0 auto;
 		}
+	}
+`
 
-		.submit {
-			margin-top: 5rem;
-			margin-bottom: 0;
-			text-align: center;
+const Container = styled.div`
+	width: 100%;
+	max-width: 40rem;
+
+	> .toggle {
+		margin: 0 6rem 2rem 6rem;
+	}
+
+	@media screen and (max-width: 960px) {
+		max-width: unset;
+	}
+`
+
+const Toggle = styled(({ options, value, onChange, ...props }) => {
+	const left = options[0]
+	const right = options[1]
+
+	return (
+		<div {...props} onClick={() => onChange()}>
+			<div className={`active-background ${value === right?.key ? 'right' : 'left'}`} />
+			<div className={`option left ${value !== right?.key && 'active'}`}>{left?.title}</div>
+			<div className={`option right ${value === right?.key && 'active'}`}>{right?.title}</div>
+		</div>
+	)
+})`
+	display: flex;
+	align-items: center;
+	position: relative;
+	padding: 1rem 0;
+	border: 0.1rem solid var(--color-border-base);
+	border-radius: 99999999999rem;
+	user-select: none;
+	cursor: pointer;
+
+	.option {
+		flex: 1 1 0;
+		position: relative;
+		transition: color 300ms ease;
+		text-align: center;
+
+		&.active {
+			color: var(--color-component-background);
 		}
-		
-	`
+	}
+
+	.active-background {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 50%;
+		height: 100%;
+		border-radius: 99999999999rem;
+		background: var(--color-light);
+		transition: all 300ms ease;
+
+		&.right {
+			left: 50%;
+		}
+	}
+`

@@ -1,76 +1,76 @@
-import React from 'react';
-import styled from 'styled-components'
-import { Typography, Statistic } from 'antd'
-import { useProposals } from '@libs/tracer'
-import { truncateString, fromWei, numberToMaxDb } from '@util/helpers'
+import { fromWei, numberToMaxDb, truncateString } from 'util/helpers'
 
+import { Skeleton, Statistic } from 'antd'
+import { useProposals } from 'libs/tracer'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
+import styled from 'styled-components'
 
-export default styled(
-	({
-		id, 
-		staked,
-		votes=[],
-		className
-	}) => {
+export default styled(({ id, staked, votes = [], className }) => {
+	const { proposals } = useProposals({ creator: id })
 
-		const { proposals } = useProposals({creator: id})
-		return <div 
-			className={`proposal-teaser ${className}`}
-			>
-			<Typography.Title 
-				level={1}
-				ellipsis 
-				className='title'
-				>
-				<Jazzicon 
-					diameter={20} 
-					seed={jsNumberForAddress(id)}
-				/>
-				{truncateString(id)}
-			</Typography.Title>
-			<Statistic
-				title="Tokens Staked" 
-				value={numberToMaxDb(fromWei(staked), 5)} 
-			/>
-			<Statistic
-				title="Proposals Raised" 
-				value={proposals.length} 
-			/>
-			<Statistic
-				title="Votes Cast" 
-				value={votes.length} 
-			/>
+	return (
+		<div className={`proposal-teaser ${className}`}>
+			{id ? (
+				<Jazzicon diameter={40} seed={id && jsNumberForAddress(id)} />
+			) : (
+				<Skeleton.Avatar className="paper" active size="large" loading={!id} />
+			)}
+			<Statistic className="title" title="Staker" loading={!id} value={truncateString(id)} />
+			<Statistic className="staked" title="Tokens Staked" value={numberToMaxDb(fromWei(staked), 5)} />
+			<Statistic className="raised" title="Proposals Raised" value={proposals.length} />
+			<Statistic className="cast" title="Votes Cast" value={votes.length} />
 		</div>
-	})
-	`
-		padding: 1.7rem 2em;
-		background: white;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+	)
+})`
+	display: grid;
+	grid-template: auto / auto auto 1fr auto auto auto;
+	grid-template-areas: 'avatar title . staked raised cast';
+	grid-gap: 2rem;
+	align-items: center;
+	margin-top: 2rem;
+	padding: 2rem;
+	border-radius: 1rem;
+	background: var(--color-popover-background);
+	box-shadow: 0 0 rgba(0, 0, 0, 0.1);
 
-		>*{
-			width: 25%;
+	> .paper {
+		grid-area: avatar;
+	}
+
+	> .title {
+		grid-area: title;
+	}
+	> .staked {
+		grid-area: staked;
+	}
+	> .raised {
+		grid-area: raised;
+	}
+	> .cast {
+		grid-area: cast;
+	}
+
+	.ant-statistic {
+		.ant-statistic-content,
+		.ant-skeleton-content {
+			font-size: 1.6rem;
 		}
-
-		.title{
+		.ant-skeleton-title {
+			font-size: 1.6rem;
 			margin: 0;
-			margin-right: 1em;
-			font-size: 1.8rem;
-			font-weight: normal;
-			display: flex;
-			align-items: center;
-
-			*:first-child{
-				margin-right: 0.5rem !important;
-			}
-
+			height: 1.3em;
 		}
+	}
 
-		.ant-statistic{
-			.ant-statistic-content{
-				font-size: 1.6rem;
-			}
+	@media screen and (max-width: 960px) {
+		grid-template: auto auto / auto auto auto 1fr;
+		grid-template-areas:
+			'title title title avatar'
+			'staked raised cast .';
+
+		> .paper {
+			justify-self: end;
+			align-self: start;
 		}
-	`
+	}
+`

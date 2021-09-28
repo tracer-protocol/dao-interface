@@ -1,10 +1,15 @@
 import { useEffect, useState, createContext, useContext, useReducer } from 'react'
 import { get } from 'lodash'
 import { useNetwork, useAccount, useTransactions } from '@libs/web3'
-import { useTracer } from '@libs/tracer'
+import TokenContract from './contract.token'
 import { TRACER_DAO_ABI } from './_config'
-import { useFileStorage, useProposals } from './'
+import Filestorage from './filestorage'
+import Proposal from './proposal'
 import { proposalFunctions } from '@archetypes/Proposal/config';
+
+const useTracer = TokenContract.useContract
+const useFileStorage = Filestorage.useFileStorage
+const useProposals = Proposal.useProposals
 
 const Context = createContext({});
 
@@ -25,9 +30,9 @@ const Provider =
 		let [contract, setContract] = useState()
 
 		const initialState = {
-			totalStaked: 0,
-			userStaked: 0,
-			proposalThreshold: 0,
+			totalStaked: '0',
+			userStaked: '0',
+			proposalThreshold: '0',
 			quorumDivisor: 0
 		}
 		const reducer = (state, action) => {

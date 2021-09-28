@@ -23,7 +23,7 @@ const generateMerkle = (data, ethersInstance) => {
       let leftChild = leaves[i];
       let rightChild;
       //If we have an odd number of nodes, just use this leaf again
-      if (i == leaves.length - 1) {
+      if (i === leaves.length - 1) {
         rightChild = leaves[i];
       } else {
         rightChild = leaves[i + 1];
@@ -143,7 +143,7 @@ const Provider =
             let proofData = [];
             tree.forEach((level) => {
                 //@ts-ignore
-                if (level.length != 1) {
+                if (level.length !== 1) {
                     //skip the root
                     //get the pair id for the current element
                     let pairId = currentId % 2 === 0 ? currentId + 1 : currentId - 1;

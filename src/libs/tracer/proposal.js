@@ -2,7 +2,9 @@ import { useEffect, useState, createContext, useContext } from 'react'
 import { find, filter } from 'lodash'
 import moment from 'moment'
 import { useQuery, gql } from '@libs/graph';
-import { useFileStorage, useDao } from './'
+import Filestorage from './filestorage'
+
+const useFileStorage = Filestorage.useFileStorage
 
 const Context = createContext({});
 
@@ -145,7 +147,6 @@ const Provider =
 		const [trigger, setTrigger] = useState(false);
 		const [proposals, setProposals] = useState([])
 		const { files, hydrate } = useFileStorage()
-		const { vote } = useDao()
 
 		const {
 			data,
@@ -171,11 +172,10 @@ const Provider =
  					...proposal,
  					...state,
  					...ipfsValues,
- 					castVote: (inFavor=1, amount="1000000000000000000") => vote(proposal?.id, `${inFavor}`, `${amount}`),
  				}
  			})
   			setProposals(_proposals)
- 		}, [data?.proposals, files, vote])
+ 		}, [data?.proposals, files])
 
 		return <Context.Provider
 			value={{

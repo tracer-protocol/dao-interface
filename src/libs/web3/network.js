@@ -65,7 +65,7 @@ const Provider = ({config={}, children}) => {
 			})
 		}
 
-	}, [web3])
+	}, [web3, config])
 
 	useEffect(() => {
 		if(Object.keys(config).length && web3 && status === 'AVAILABLE'){

@@ -1,55 +1,74 @@
-import React from 'react';
-import { Link } from "react-router-dom";
-import styled from 'styled-components'
-import { Filter, DataLoader, Button } from '@components'
-import { useProposals } from '@libs/tracer'
+import BackToTopButton from 'components/BackToTopButton'
+import Button from 'components/Button'
+import DataLoader from 'components/DataLoader'
+import Filter from 'components/Filter'
+import { useProposals } from 'libs/tracer'
+import { Link } from 'react-router-dom'
+import styled, { css } from 'styled-components'
+
 import { statusOptions } from './config'
 import Teaser from './Teaser'
 
-export default styled(
-	({
-		className
-	}) => {
-		const { proposals, loading, setFilter } = useProposals( { state: 'proposed' })
-		return <div className={className}>
+export default styled(({ className }) => {
+	const { proposals, loading, setFilter } = useProposals({ state: 'proposed' })
 
+	return (
+		<div className={className}>
 			<div className="topbar">
-
 				<Filter
+					title="Proposals"
 					options={Object.values(statusOptions)}
-					defaultSelected={['open']}
+					defaultSelected={[statusOptions.open.key]}
 					onChange={type => setFilter('state', type[0])}
 				/>
-
-				<Link to='/proposal/new'>
-					<Button
-						size='large'
-						type="primary"
-						>
+				<Link to="/proposal/new" className="new-proposal-link">
+					<Button size="large" type="inverse">
 						New Proposal
-
 					</Button>
 				</Link>
 			</div>
 
-			<DataLoader
-				loading={loading}
-				noresults={proposals.length <= 0}
-			>
-				{proposals.map(({id}) => <Teaser key={id} id={id}/>)}
-			</DataLoader>
-
+			<Results hasResults={proposals.length > 0}>
+				<DataLoader loading={loading} noresults={proposals.length <= 0}>
+					{proposals.map(({ id }) => (
+						<Teaser key={id} id={id} />
+					))}
+				</DataLoader>
+				{proposals.length > 0 && <BackToTopButton />}
+			</Results>
 		</div>
-	})
-	`	
-		.topbar{
-			margin-bottom: 4.7rem;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
+	)
+})`
+	.topbar {
+		margin-bottom: 4.7rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	@media screen and (max-width: 960px) {
+		.topbar {
+			margin-bottom: 1.5rem;
 		}
 
-		.proposal-teaser + .proposal-teaser{
-			margin-top: 1em
+		.new-proposal-link {
+			display: none;
 		}
-	`
+	}
+`
+
+const Results = styled.div`
+	display: grid;
+	grid-template: auto / auto;
+	grid-gap: 1em;
+
+	${props =>
+		props.hasResults &&
+		css`
+			grid-template: auto / 1fr 1fr;
+		`}
+
+	@media screen and (max-width: 960px) {
+		grid-template: auto / auto;
+	}
+`

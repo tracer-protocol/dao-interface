@@ -1,108 +1,86 @@
-import React, { useState, useMemo } from 'react';
-import styled from 'styled-components'
-import { DataLoader } from '@components'
-import { useMembers } from '@libs/tracer'
+import { Typography } from 'antd'
+import DataLoader from 'components/DataLoader'
+import Filter from 'components/Filter'
+import { useMembers } from 'libs/tracer'
+import React, { useMemo, useState } from 'react'
+import { VirtuosoGrid } from 'react-virtuoso'
+import styled, { css } from 'styled-components'
+
 import Teaser from './Teaser'
-import { Menu, Dropdown, Typography } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
 
+const sortMethods = [
+	{ key: 'tokensStaked', title: 'Tokens Staked' },
+	{ key: 'votesCast', title: 'Votes Cast' },
+]
 
+export default styled(({ className }) => {
+	const { members, loading } = useMembers()
 
-const StyledDropdown = styled(Dropdown)	
-`	
-	background: #fff;
-	color: #0000bd;
-	padding: 10px;
-	border-radius: 3px;
-	right: 0;
-`
+	const [sortMethod, setSortMethod] = useState(sortMethods[0])
 
-const DropdownContainer = styled.div
-`
-	width: 100%;
-	text-align: right;
-	margin: 20px 0;
-`
+	const sortedMembers = useMemo(() => {
+		if ((members || []).length < 1) return members
 
-export default styled(
-	({
-		className
-	}) => {
-		const { members, loading } = useMembers()
-		const [sort, setSort] = useState(0)
+		if (sortMethod.key === 'tokensStaked') return members.slice().sort((m1, m2) => m2.staked - m1.staked)
+		if (sortMethod.key === 'votesCast') return members.slice().sort((m1, m2) => m2.votes.length - m1.votes.length)
 
-		const map = {
-			0: "Total Staked",
-			1: "Proposals Raised",
-			2: "Votes Cast"
-		}
+		return members
+	}, [members, sortMethod])
 
-		const sortedMembers = useMemo(() => {
-			if (members?.length) {
-				switch (sort) {
-					case 0: 
-						return members.slice().sort((m1, m2) => m2.staked - m1.staked)
-					// case 1: 
-					// 	return members.slice().sort((m1, m2) => m2.votes.length - m1.votes.length)
-					case 2: 
-						return members.slice().sort((m1, m2) => m2.votes.length - m1.votes.length)
-					default: return members;
-				}
-			} else {
-				return members
-			}
-
-		}, [members, sort])
-
-
-		const menu = (
-			<Menu onClick={(e) => setSort(parseInt(e.key))}>
-				<Menu.Item key={0}>
-					<Typography>
-						Tokens Staked
-					</Typography>
-				</Menu.Item>
-				{/* <Menu.Item key="1">
-					<Typography>
-						Proposals Raised
-					</Typography>
-				</Menu.Item> */}
-				<Menu.Item key={2}>
-					<Typography>
-						Votes Cast
-					</Typography>
-				</Menu.Item>
-			</Menu>
-		);
-
-		return <div 
-			className={className}
-			>
-			<DataLoader
-				loading={loading}
-				noresults={members?.length <= 0}
-				>
-				<DropdownContainer>
-					<StyledDropdown overlay={menu} trigger={['click']}>
-						<a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-							Sort by: {map[sort]} <DownOutlined />
-						</a>
-					</StyledDropdown>
-				</DropdownContainer>
-				{sortedMembers.map(member => <Teaser key={member.id} {...member}/>)}
+	return (
+		<div className={className}>
+			<DataLoader loading={loading} noresults={members?.length <= 0}>
+				<div className="topbar">
+					<DesktopTitle>Sort by</DesktopTitle>
+					<Filter
+						title="Sort by"
+						options={sortMethods.map(({ key, title }) => ({ key, value: title }))}
+						defaultSelected={sortMethod.key}
+						onChange={selectedKeys => setSortMethod(sortMethods.find(({ key }) => key === selectedKeys[0]))}
+					/>
+				</div>
+				<VirtuosoGrid
+					totalCount={sortedMembers?.length}
+					itemContent={index => <Teaser {...sortedMembers[index]} />}
+					components={{ List: Results }}
+					useWindowScroll
+				/>
 			</DataLoader>
-		
 		</div>
-	})
-	`	
-		.topbar{
-			margin-bottom: 4.7rem;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-		}
+	)
+})`
+	.topbar {
+		margin-bottom: 4.7rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
 
-		.proposal-teaser + .proposal-teaser{
-			margin-top: 1em
+	@media screen and (max-width: 960px) {
+		.topbar {
+			margin-bottom: 1.5rem;
 		}
-	`
+	}
+`
+
+const DesktopTitle = styled(props => <Typography.Title level={4} {...props} />)`
+	@media screen and (max-width: 960px) {
+		display: none;
+	}
+`
+
+const Results = styled.div`
+	display: grid;
+	grid-template: auto / auto;
+	grid-column-gap: 2rem;
+
+	${props =>
+		props.children.length > 0 &&
+		css`
+			grid-template: auto / 1fr 1fr;
+		`}
+
+	@media screen and (max-width: 960px) {
+		grid-template: auto / auto;
+	}
+`

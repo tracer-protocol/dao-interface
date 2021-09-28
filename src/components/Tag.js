@@ -1,39 +1,29 @@
-import React from 'react';
-import styled from 'styled-components'
 import { Tag as AntdTag } from 'antd'
+import styled from 'styled-components'
 
-const Tag = styled(
-	({
-		checkable,
-		children,
-		...props
-	}) => 
-		!!checkable 
-			? <AntdTag.CheckableTag {...props}>{children}</AntdTag.CheckableTag> 
-			: <AntdTag {...props}>{children}</AntdTag>
-	)
-	`
-		border: none;
-		border-radius: 1.2em;
-		font-size: 1.4rem;
-		padding: 0.55rem 1.5rem;
-		border: 1px solid var(--color-primary, black);
-		color: var(--color-primary, black);
+const Tag = styled(({ checkable, ...props }) =>
+	checkable ? <AntdTag.CheckableTag {...props} /> : <AntdTag {...props} />
+)`
+	font-size: var(--font-size-normal);
+	padding: 6.4px var(--btn-padding-horizontal-lg);
+	height: 40px;
+	line-height: 1.5715;
+	font-size: 16px;
+	border: 1px solid var(--color-border-base, black);
 
-		&:not(.ant-tag-checkable-checked):hover{
-			color: var(--color-primary, black) !important;
-		}
+	&:not(.ant-tag-checkable-checked):hover {
+		color: var(--text-color);
+	}
 
-		&.ant-tag-checkable-checked{
-			background: var(--color-primary, black);
-			color: var(--color-primary-inverse, white);
-		}
+	&.ant-tag-checkable-checked {
+		color: var(--text-color);
+	}
 
-		& + &{
-			margin-left: 1.2em;
-		}
-	`
+	& + & {
+		margin-left: 1.2em;
+	}
+`
 
-Tag.CheckableTag = props => <Tag {...props} checkable/> 
+Tag.CheckableTag = props => <Tag {...props} checkable />
 
 export default Tag

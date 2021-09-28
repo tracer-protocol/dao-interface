@@ -1,0 +1,114 @@
+// use antd dark theme as base
+@import '~antd/lib/style/themes/dark.less';
+@import '~antd/dist/antd.less';
+
+//
+// -------------------------
+// antd theme customisations
+// -------------------------
+//
+// an attempt has been made to keep these grouped and sorted the same as:
+//   node_modules/antd/lib/style/themes/default.less
+//
+
+// -------- Colors -----------
+@primary-color: #3da8f5;
+
+// Base Scaffolding Variables
+@component-background: #03065e;
+@popover-background: #002886;
+@text-color-inverse: #000;
+@border-radius-base: 1.4em;
+
+// Border color
+@border-color-base: #18469a;
+
+@btn-padding-horizontal-base: @padding-md + 2px;
+@btn-padding-horizontal-lg: @padding-lg + 6px;
+
+// Layout
+@layout-body-background: @component-background;
+@layout-header-background: @popover-background;
+
+// Menu
+// ---
+// dark theme
+@menu-dark-bg: transparent;
+@menu-popup-bg: transparent;
+@menu-dark-inline-submenu-bg: transparent;
+@menu-dark-item-active-bg: transparent;
+
+//
+// -----------------------------
+// end antd theme customisations
+// -----------------------------
+//
+
+//
+// ---------------------------
+// css custom property exports
+// ---------------------------
+//
+// anything you need to access as a css variable should be exported here
+//
+
+:root {
+	// primary
+	--color-primary: @primary-color;
+	--color-inverse: #ffffff; // doesn't exist in antd
+	--color-inverse-muted: #cecece; // doesn't exist in antd
+
+	--color-component-background: @component-background;
+	--color-popover-background: @popover-background;
+	--color-popover-lighter-background: #3372e8;
+
+	--color-border-base: @border-color-base;
+
+	--text-color: @text-color;
+	--text-color-secondary: @text-color-secondary;
+	--text-color-inverse: @text-color-inverse;
+
+	--btn-padding-horizontal-lg: @btn-padding-horizontal-lg;
+
+	// greys
+	--color-light: #ffffff;
+	--color-grey-25: #f8f8f8;
+	--color-grey-50: #f1f1f1;
+	--color-grey-100: #e1e1e1;
+	--color-grey-200: #c8c8c8;
+	--color-grey-300: #acacac;
+	--color-grey-400: #919191;
+	--color-grey-500: #6e6e6e;
+	--color-grey-600: #404040;
+	--color-grey-700: #303030;
+	--color-grey-800: #292929;
+	--color-grey-900: #212121;
+	--color-grey-950: #141414;
+	--color-dark: #000000;
+
+	// others
+	--color-gold: #ead017;
+
+	// status hex
+	--color-status-success: #2ed47a;
+	--color-status-concern: #ffb800;
+	--color-status-failure: #ff4d00;
+	--color-status-neutral: #17b1dc;
+
+	// fonts
+	--font-size-xxxlarge: 5rem;
+	--font-size-xxlarge: 3.6rem;
+	--font-size-xlarge: 2.8rem;
+	--font-size-large: 2.1rem;
+	--font-size-medium: 1.6rem;
+	--font-size-normal: 1.4rem;
+	--font-size-small: 12px;
+	--font-size-xsmall: 10px;
+	--font-size-xxsmall: 9px;
+}
+
+//
+// -------------------------------
+// end css custom property exports
+// -------------------------------
+//
