@@ -25,59 +25,11 @@ const StyledContent = styled(Layout.Content)`
 const StyledLayout = styled(Layout)
 `
 	min-height: 100vh;
-	.mobile {
-		display: none;
-		color: black;
-		min-height: 100vh;
-		position: absolute;
-		background: #F0F2F5;
-		left: 0;
-		top: 0;
-		width: 100%;
-		z-index: 1000;
-		max-width: 100vw;
-	}
-
-	@media screen and (max-width: 768px) {
-		.mobile {
-			display: block;
-		}
-		display: none;
-	}
-
 `
 
-const Mobile = styled.div
-`
-	display: none;
-	color: black;
-	min-height: 100vh;
-	position: absolute;
-	background: white;
-	padding: 3rem;
-	left: 0;
-	top: 0;
-	width: 100%;
-	z-index: 1000;
-	max-width: 100vw;
-
-	h1 {
-		margin: auto;
-		color: #0000bd!important;
-		text-align: center;
-		font-weight: 500;
-	}
-
-	@media screen and (max-width: 768px) {
-		display: flex;
-	}
-`
 
 const Details = () =>  
 <>
-	<Mobile>
-		<h1>We are currently optimising the mobile experience. For now please visit the site on a desktop.</h1>
-	</Mobile>
 	<StyledLayout>
 		<Router basename="/">
 			<Header />
