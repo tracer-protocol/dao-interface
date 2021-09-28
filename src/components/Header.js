@@ -5,7 +5,6 @@ import { Account, Network } from 'archetypes'
 import { ReactComponent as TracerBlogLogo } from 'assets/tracer_blog.svg'
 import { ReactComponent as TracerGovernLogo } from 'assets/tracer_govern.svg'
 import { ReactComponent as TracerLogo } from 'assets/tracer_logo.svg'
-import { ReactComponent as TracerPerpetualsLogo } from 'assets/tracer_perps.svg'
 import FlexSpace from 'components/FlexSpace'
 import HeaderSiteSwitcher from 'components/HeaderSiteSwitcher'
 import MobileSocialLogos from 'components/MobileSocialLogos'
@@ -84,11 +83,6 @@ export default styled(({ className }) => {
 						<MobileMenuItem>
 							<a href="https://tracer.finance">
 								<StyledTracerLogo />
-							</a>
-						</MobileMenuItem>
-						<MobileMenuItem>
-							<a href="https://tracer.finance/exchange/">
-								<StyledTracerPerpetualsLogo />
 							</a>
 						</MobileMenuItem>
 						<MobileMenuItem>
@@ -238,11 +232,6 @@ const Row = styled(WrapContainer)`
 `
 
 const StyledTracerLogo = styled(TracerLogo)`
-	display: block;
-	height: 2.8rem;
-	margin-right: 0.5rem;
-`
-const StyledTracerPerpetualsLogo = styled(TracerPerpetualsLogo)`
 	display: block;
 	height: 2.8rem;
 	margin-right: 0.5rem;

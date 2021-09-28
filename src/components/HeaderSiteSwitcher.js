@@ -1,7 +1,6 @@
 import { ReactComponent as TracerBlogLogo } from 'assets/tracer_blog.svg'
 import { ReactComponent as TracerGovernLogo } from 'assets/tracer_govern.svg'
 import { ReactComponent as TracerLogo } from 'assets/tracer_logo.svg'
-import { ReactComponent as TracerPerpetualsLogo } from 'assets/tracer_perps.svg'
 import { ReactComponent as TriangleDown } from 'assets/triangle_down_cropped.svg'
 import MobileSocialLogos from 'components/MobileSocialLogos'
 import { Link } from 'react-router-dom'
@@ -28,11 +27,6 @@ export default function HeaderSiteSwitcher() {
 					</a>
 				</MenuItem>
 				<MenuItem>
-					<a href="https://tracer.finance/exchange/">
-						<StyledTracerPerpetualsLogo />
-					</a>
-				</MenuItem>
-				<MenuItem>
 					<a href="https://tracer.finance/radar">
 						<StyledTracerBlogLogo />
 					</a>
@@ -56,11 +50,6 @@ const StyledTriangleDown = styled(TriangleDown)`
 `
 
 const StyledTracerLogo = styled(TracerLogo)`
-	display: block;
-	height: 2.8rem;
-	margin-right: 2rem;
-`
-const StyledTracerPerpetualsLogo = styled(TracerPerpetualsLogo)`
 	display: block;
 	height: 2.8rem;
 	margin-right: 2rem;
