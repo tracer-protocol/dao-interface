@@ -258,23 +258,28 @@ const StyledTracerBlogLogo = styled(TracerBlogLogo)`
 	margin-right: 0.5rem;
 `
 
-const StyledMenu = styled(Menu)`
+const StyledMenu = styled.div`
 	display: flex;
 	height: 8.6rem;
 `
-const StyledMenuItem = styled(Menu.Item)`
-	&&& {
-		display: flex;
-		align-items: stretch;
-	}
+const StyledMenuItem = styled.div`
+	display: flex;
+	align-items: center;
+	margin: auto 1rem;
+	color: #fff;
 	font-size: 1.8rem;
 
 	> a {
 		display: flex;
+		color: rgba(255, 255, 255, 0.85);
 		align-items: center;
 		transition: color 500ms ease;
+		&: hover {
+			color: #fff;
+		}
 	}
 `
+
 const SubMenu = styled(StyledMenu)`
 	height: 4rem;
 `
